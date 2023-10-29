@@ -21,7 +21,7 @@ tooltip {
 }
 
 #workspaces button {
-    padding: 5px;
+    padding: 10px;
     color: #313244;
     margin-right: 5px;
 }
@@ -30,7 +30,7 @@ tooltip {
     color: #a6adc8;
 }
 
-#workspaces button.focused {
+#workspaces button.active{
     color: #a6adc8;
     background: #eba0ac;
     border-radius: 10px;
@@ -57,6 +57,8 @@ tooltip {
 #network,
 #bluetooth,
 #temperature,
+#cpu,
+#memory,
 #workspaces,
 #tray,
 #backlight {
@@ -64,12 +66,14 @@ tooltip {
     opacity: 0.8;
     padding: 0px 10px;
     margin: 3px 0px;
-    margin-top: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     border: 1px solid #181825;
 }
 
 #temperature {
-    border-radius: 10px 0px 0px 10px;
+    color: #ff4c4c;
+    margin-right: 0px;
 }
 
 #temperature.critical {
@@ -89,7 +93,7 @@ tooltip {
     background: #1e1e2e;
     border-radius: 10px;
     margin-left: 10px;
-    padding-right: 0px;
+    padding-right: 5px;
     padding-left: 5px;
 }
 
@@ -114,9 +118,10 @@ tooltip {
 
 #network {
     color: #f9e2af;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 0px 10px 10px 0px;
     border-left: 0px;
     border-right: 0px;
+    margin-left: 0px;
 }
 
 #bluetooth {
@@ -127,7 +132,9 @@ tooltip {
 
 #pulseaudio {
     color: #89b4fa;
-    border-left: 0px;
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 10px;
+    border-right: 0px;
     border-right: 0px;
 }
 
@@ -141,13 +148,32 @@ tooltip {
 
 #battery {
     color: #a6e3a1;
-    border-radius: 0 10px 10px 0;
-    margin-right: 10px;
+    border-radius: 0px 0px 0px 0px;
+    margin-right: 0px;
     border-left: 0px;
 }
 
+#memory {
+    color: #FAFA33;
+    border-left: 0px;
+    border-right: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+#cpu {
+    color: #FFBF00;
+    border-radius: 10px 0px 0px 10px;
+    border-right: 0px;
+    margin-right: 0px;
+}
 #custom-weather {
     border-radius: 0px 10px 10px 0px;
     border-right: 0px;
     margin-left: 0px;
 }
+
+
+
+
+
