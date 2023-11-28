@@ -2,10 +2,12 @@
 	"layer": "top",
 	"position": "top",
 	"modules-left": ["clock", "network"],
-	"modules-center": ["hyprland/window", "sway/window"],
+	"modules-center": ["hyprland/window"],
 	"modules-right": ["cpu", "memory", "temperature", "battery", "pulseaudio"],
-	"sway/window": {
-		"max-length": 15
+	
+	
+	"hyprland/window": {
+		"max-length": 30
         },
 
 	"memory": {
@@ -94,6 +96,8 @@
 		"active": "",
 		"default": ""
 	},
+
+
 	"sort-by-number": true
 }
 }
