@@ -1,0 +1,8 @@
+[Added Associations]
+text/html=firefox.desktop;libreoffice-writer.desktop;
+application/x-troff-man=firefox.desktop;
+application/x-shellscript=leafpad.desktop;
+application/x-zerosize=libreoffice-calc.desktop;leafpad.desktop;
+
+[Default Applications]
+application/x-zerosize=leafpad.desktop

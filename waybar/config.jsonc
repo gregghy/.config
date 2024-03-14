@@ -1,0 +1,104 @@
+{
+	"layer": "top",
+	"position": "top",
+	"modules-left": ["clock", "network"],
+	"modules-center": ["hyprland/window"],
+	"modules-right": ["cpu", "memory", "temperature", "battery", "pulseaudio"],
+	
+	
+	"hyprland/window": {
+		"max-length": 30
+        },
+
+	"memory": {
+                "interval": 30,
+                "format": "{}%"
+        },
+
+	"battery": {
+		"format": "{capacity}%{icon}",
+		"format-icons": ["", "", "", "", ""]
+	},
+
+	"clock": {
+                "format": "{: %H:%M   %a, %b %e}",
+		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    	},
+	"pulseaudio": {
+        	"format": "{icon} {volume}%",
+        	"tooltip": false,
+        	"format-muted": " Muted",
+        	"on-click": "pamixer -t",
+        	"on-scroll-up": "pamixer -i 5",
+        	"on-scroll-down": "pamixer -d 5",
+        	"scroll-step": 5,
+        	"format-icons": {
+            		"headphone": "",
+            		"hands-free": "",
+            		"headset": "",
+            		"phone": "",
+            		"portable": "",
+            		"car": "",
+            		"default": ["", "", ""]
+        	}
+    	},
+	"temperature": {
+        	"thermal-zone": 1,
+        	"format": "{temperatureC}°C",
+        	"critical-threshold": 70,
+        	"format-critical": "{temperatureC}°C"
+    	},
+
+    	"cpu": {
+		"interval": 10,
+		"format": "{}%"
+    	},
+
+	"network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        	"format-wifi": " {signalStrength}%",
+        	"format-ethernet": "{ipaddr}/{cidr}",
+        	"tooltip-format": "{essid} - {ifname} via {gwaddr}",
+        	"format-linked": "{ifname} (No IP)",
+        	"format-disconnected": "Disconnected ⚠",
+        	"format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
+    	},
+//	"wlr/workspaces": {
+  //      	"disable-scroll": false,
+    //    	"all-outputs": true,
+//		"active-only": true,
+  //      	"on-click": "activate",
+    //    	"persistent_workspaces": {
+      //      		"1": [1],
+        //    		"2": [2],
+          //  		"3": [3],
+            //		"4": [4],
+            //		"5": [5],
+            //		"6": [6],
+            //		"7": [7],
+            //		"8": [8],
+            //		"9": [9],
+            //		"10": [10]
+        //	}
+    //	},
+	"wlr/workspaces": {
+	"format": "{name}: {icon}",
+	"format-icons": {
+		"1": "",
+		"2": "",
+		"3": "",
+		"4": "",
+		"5": "",
+		"6": "6",
+		"7": "7",
+		"8": "8",
+		"9": "9",
+		"active": "",
+		"default": ""
+	},
+
+
+	"sort-by-number": true
+}
+}
+
