@@ -8,22 +8,23 @@
 	
 	"hyprland/window": {
 		"max-length": 30
-        },
+  },
 
 	"memory": {
-                "interval": 30,
-                "format": "{}%"
-        },
+    "interval": 30,
+    "format": "{}%"
+  },
 
 	"battery": {
 		"format": "{capacity}%{icon}",
 		"format-icons": ["", "", "", "", ""]
 	},
 
-	"clock": {
-                "format": "{: %H:%M   %a, %b %e}",
+  "clock": {
+    "format": " {:%H:%M   %a %e %b}",
 		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-    	},
+  },
+
 	"pulseaudio": {
         	"format": "{icon} {volume}%",
         	"tooltip": false,
@@ -41,18 +42,19 @@
             		"car": "",
             		"default": ["", "", ""]
         	}
-    	},
+  },
+
 	"temperature": {
         	"thermal-zone": 1,
         	"format": "{temperatureC}°C",
         	"critical-threshold": 70,
         	"format-critical": "{temperatureC}°C"
-    	},
+  },
 
-    	"cpu": {
+  "cpu": {
 		"interval": 10,
 		"format": "{}%"
-    	},
+  },
 
 	"network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface

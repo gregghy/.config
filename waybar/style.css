@@ -57,6 +57,7 @@ tooltip {
 #network,
 #bluetooth,
 #temperature,
+#gpu,
 #cpu,
 #memory,
 #workspaces,
@@ -180,6 +181,15 @@ tooltip {
     border-right: 0px;
     margin-right: 0px;
 }
+
+#gpu {
+  background: #1d2021;
+  color: #FFCF00;
+  border-radius: 10px 0px 0px 10px;
+  border-right: 0px;
+  margin-right: 0px;
+}
+
 #custom-weather {
     background: #1d2021;
     border-radius: 0px 10px 10px 0px;
