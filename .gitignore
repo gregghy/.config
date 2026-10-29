@@ -80,3 +80,5 @@ zoom/
 zoom.conf
 zoomus.conf
 chromium-headless/
+herdr/*
+!herdr/config.toml

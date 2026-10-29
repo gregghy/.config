@@ -1,0 +1,90 @@
+# Omarchy-style herdr config, adapted to this desktop's keymap.
+# Hyprland owns Alt ($mainMod), so alt+ combos that collide with hyprland
+# binds were dropped or moved to the Ctrl+Space prefix / Ctrl+Alt space:
+#   hyprland Alt+arrows  (movefocus) -> herdr Ctrl+Alt+arrows (focus pane)
+#   hyprland Alt+1..9    (workspace) -> herdr prefix+1..9     (switch tab)
+#   hyprland Alt+Up/Down (movefocus) -> herdr prefix+shift+p/n (workspaces)
+# Surviving alt keys (alt+enter, alt+esc, alt+shift+arrows) are free in hyprland.
+
+[theme]
+# Runs on the terminal's own palette (kitty Catppuccin Mocha here)
+name = "terminal"
+
+[theme.custom]
+# Tab bar on the terminal background like tmux bg=default; dark text on the
+# blue accent for the active tab
+panel_bg = "reset"
+surface_dim = "black"
+
+[terminal]
+# New panes/tabs/workspaces open in the current pane's cwd
+new_cwd = "follow"
+
+[keys]
+prefix = "ctrl+space"
+
+# Config and help
+reload_config = "prefix+q"
+help = "prefix+?"
+detach = "prefix+d"
+
+# Copy mode
+copy_mode = "prefix+["
+
+# Panes
+split_horizontal = ["prefix+h", "alt+enter"]
+split_vertical = ["prefix+v", "alt+shift+enter"]
+close_pane = ["prefix+x", "alt+esc"]
+zoom = "prefix+z"
+last_pane = "prefix+;"
+
+# Focus mirrors hyprland's movefocus shape: modifier+arrows, shifted to Ctrl+Alt
+focus_pane_left = "ctrl+alt+left"
+focus_pane_down = "ctrl+alt+down"
+focus_pane_up = "ctrl+alt+up"
+focus_pane_right = "ctrl+alt+right"
+
+resize_mode = ["prefix+ctrl+left", "prefix+ctrl+down", "prefix+ctrl+up", "prefix+ctrl+right"]
+
+resize_pane_left = "ctrl+alt+shift+left"
+resize_pane_down = "ctrl+alt+shift+down"
+resize_pane_up = "ctrl+alt+shift+up"
+resize_pane_right = "ctrl+alt+shift+right"
+
+rename_pane = "prefix+shift+o"
+
+# Windows -> tabs
+new_tab = "prefix+c"
+rename_tab = "prefix+r"
+close_tab = "prefix+k"
+switch_tab = ["prefix+1..9"]
+previous_tab = "prefix+p"
+next_tab = "prefix+n"
+
+# Move tabs with alt+shift+arrows (free in hyprland)
+move_tab_previous = "alt+shift+left"
+move_tab_next = "alt+shift+right"
+
+# Sessions -> workspaces
+new_workspace = "prefix+shift+c"
+rename_workspace = "prefix+shift+r"
+close_workspace = "prefix+shift+k"
+previous_workspace = "prefix+shift+p"
+next_workspace = "prefix+shift+n"
+
+[ui]
+accent = "blue"
+
+# tmux-style dividers: single-line gaps, no outer frame, no scrollbars
+pane_gaps = false
+pane_outer_borders = false
+pane_scrollbars = false
+
+confirm_close = false
+prompt_new_tab_name = false
+mouse_capture = true
+
+tab_bar_right = [{ type = "zoom" }, { type = "hostname" }]
+
+# Hyprland group bar / window title shows "host: workspace"
+window_title = "{hostname}: {workspace}"
