@@ -67,6 +67,7 @@ It's idempotent — safe to re-run.
 | `Alt+Shift+D` `Q` `/` `` ` `` | detach / reload / help / copy mode |
 
 `Ctrl+Space` remains the fallback prefix. Only `Alt+Shift+E` is taken (Hyprland → yazi).
+us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to herdr).
 
 **Shell** (bash): `ls`/`ll`/`lt` → eza with yazi's icons+colors ·
 `cat` → bat (gruvbox-dark) · `Ctrl+R`/`Ctrl+T` fzf · `z <dir>` zoxide ·
