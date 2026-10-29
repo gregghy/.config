@@ -126,6 +126,7 @@ hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("baomao-ask"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo()) -- dwindle
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Screenshots/_$(date +%F_%T).png'))
+hl.bind("alt + shift + S", hl.dsp.exec_cmd('grim ~/Screenshots/_$(date +%F_%T).png && notify-send "Screenshot" "saved to ~/Screenshots/"'))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenrecord"))
 hl.bind("CTRL + " .. mainMod .. " + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenrecord output"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
