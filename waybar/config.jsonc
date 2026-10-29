@@ -66,7 +66,6 @@
         	"format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
     	},
 	"hyprland/workspaces": {
-		"active-only": true,
 		"format": "{id}"
 	}
 }

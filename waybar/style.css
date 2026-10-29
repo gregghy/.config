@@ -21,16 +21,22 @@ tooltip {
 }
 
 #workspaces button {
-    padding: 0px 8px;
-    min-width: 24px;
-    color: #665c54;
-    margin-right: 5px;
+    color: transparent;
+    background: transparent;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    border: none;
 }
 
 #workspaces button.active {
     color: #1d2021;
     background: #83a598;
     border-radius: 10px;
+    min-width: 28px;
+    padding: 0px 10px;
+    margin-right: 5px;
 }
 
 #workspaces button.urgent {
@@ -109,7 +115,7 @@ tooltip {
     background: #1d2021;
     color: #f2c993;
     border-radius: 10px;
-    min-width: 480px;
+    min-width: 320px;
 }
 
 #clock {
