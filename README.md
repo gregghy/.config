@@ -86,11 +86,14 @@ It's idempotent — safe to re-run.
 `Alt+Shift` is fully free for herdr — Hyprland binds nothing on it.
 us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to herdr).
 
-**nchat** (`nchat-git` fork — kitty image previews, two-column layout, custom
-keys in `nchat/key.conf` + kitty passthroughs in `kitty/kitty.conf` and
-`kitty/nchat.conf` — the latter only loads in the dedicated `Alt+M` window
-and turns `Ctrl+Shift+<key>` into nchat's `Alt+<key>` bindings, since
-Hyprland owns most `Alt+letter` combos globally):
+**nchat** (`nchat-git` fork — dev repo `~/progetti/nchat` branch `custom`,
+pushed to `github.com/gregghy/nchat`; PKGBUILD in `~/.cache/yay/nchat-git`
+sources the local repo — edit → commit → `makepkg -e -f` → `pacman -U`).
+Kitty image previews, two-column layout, custom keys in `nchat/key.conf` +
+kitty passthroughs in `kitty/kitty.conf` and `kitty/nchat.conf` — the
+latter only loads in the dedicated `Alt+M` window and turns
+`Ctrl+Shift+<key>` into nchat's `Alt+<key>` bindings, since Hyprland owns
+most `Alt+letter` combos globally):
 
 | Keys | Action |
 |---|---|
