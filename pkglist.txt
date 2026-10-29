@@ -76,6 +76,7 @@ lxappearance
 mako
 mesa-utils
 mictray
+mpd
 mpv
 mullvad-vpn-bin
 nchat-git
@@ -114,6 +115,7 @@ qbittorrent
 reflector
 resvg
 rlwrap
+rmpc
 rsync
 sdl2-compat
 sdl2_image

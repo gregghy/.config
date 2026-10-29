@@ -130,7 +130,7 @@ hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenrecord"
 hl.bind("CTRL + " .. mainMod .. " + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenrecord output"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
 hl.bind(mainMod .. " + H", hl.dsp.exec_cmd("kitty --class herdr -e herdr"))
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("kitty --class nchat -e nchat"))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("kitty --class nchat --config /home/gregghy/.config/kitty/kitty.conf --config /home/gregghy/.config/kitty/nchat.conf -e nchat"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -210,7 +210,7 @@ route("obsidian", 6)
 -- Float system TUIs launched from waybar (impala, wiremix).
 hl.window_rule({
 	name = "float-system-tuis",
-	match = { class = "^(impala|wiremix|bluetui)$" },
+	match = { class = "^(impala|wiremix|bluetui|rmpc)$" },
 	float = true,
 	center = true,
 })

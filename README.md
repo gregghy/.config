@@ -87,18 +87,31 @@ It's idempotent — safe to re-run.
 us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to herdr).
 
 **nchat** (`nchat-git` fork — kitty image previews, two-column layout, custom
-keys in `nchat/key.conf` + kitty passthroughs in `kitty/kitty.conf`):
+keys in `nchat/key.conf` + kitty passthroughs in `kitty/kitty.conf` and
+`kitty/nchat.conf` — the latter only loads in the dedicated `Alt+M` window
+and turns `Ctrl+Shift+<key>` into nchat's `Alt+<key>` bindings, since
+Hyprland owns most `Alt+letter` combos globally):
 
 | Keys | Action |
 |---|---|
-| `↑`/`↓` | navigate contact list (when input empty) · cursor in text |
+| `←` / `→` | arrow target: contact list / chat history (typing → cursor) |
+| `↑`/`↓` | navigate whichever side `←`/`→` selected |
 | `Enter` / `Shift+Enter` | send / newline in message |
-| `Ctrl+M` | attach file (kitty maps it to `Esc m`) |
-| `Ctrl+F` / `Alt+U` | find in chat / jump to unread chat |
+| `Esc` | close dialogs (file picker, emoji, find, …) |
+| `Ctrl+H` | page through command list in the help bar |
+| `Ctrl+M` | attach file (kitty maps it to `Esc m`) — newest files first |
+| `Ctrl+F` / `Ctrl+Shift+U` | find in chat / jump to unread chat |
 | `Ctrl+V` | paste clipboard text (image → attach) — needs `wl-clipboard` |
 | `Ctrl+C` | copy mouse-selected text (kitty `copy_or_interrupt`) |
-| `Ctrl+↑` / `↑`/`↓` | select message / move selection |
-| `Ctrl+N` / `Ctrl+S` | goto chat / emoji picker |
+| `Ctrl+↑` | enter message selection (then type → quote-reply) |
+| `Ctrl+E` / `Ctrl+N` | emoji picker / goto chat |
+| `Ctrl+O` / `Ctrl+W` | open attachment / open link |
+| `Ctrl+Shift+S` / `+R` | react / forward (selected message) |
+| `Ctrl+Shift+P` / `+Q` | pin message / jump to quoted |
+| `Ctrl+Shift+A` / `+D` | archive / delete chat |
+| `Ctrl+Shift+N` / `+2` | add contact / mention |
+| `Ctrl+←→` / `Ctrl+Del` / `Ctrl+Bksp` | word nav / kill word fwd / back |
+| wheel | scroll chat history (Shift+drag to select text) |
 
 **Workspaces** (named, apps auto-route — see `hl.window_rule`/`hl.workspace_rule` in `hyprland.lua`):
 
