@@ -1,0 +1,28 @@
+{
+    "archinstall-language": "English",
+    "bootloader": "systemd-boot",
+    "hostname": "argh",
+    "kernels": ["linux"],
+    "locale_config": {
+        "kb_layout": "us",
+        "sys_lang": "en_US.UTF-8",
+        "sys_enc": "UTF-8"
+    },
+    "profile_config": {
+        "profile": {
+            "profile": "minimal",
+            "custom_settings": {}
+        },
+        "gfx_driver": null
+    },
+    "audio_config": {
+        "audio": "pipewire"
+    },
+    "network_config": {
+        "type": "iso"
+    },
+    "packages": ["git", "base-devel"],
+    "services": [],
+    "swap": true,
+    "ntp": true
+}

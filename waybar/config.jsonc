@@ -16,7 +16,7 @@
 	},
 
   "clock": {
-    "format": " {:%H:%M   %a %e %b}",
+    "format": "林ux · {:%H:%M   %a %e %b}",
 		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
   },
 
@@ -24,7 +24,8 @@
         	"format": "{icon} {volume}%",
         	"tooltip": false,
         	"format-muted": " Muted",
-        	"on-click": "pamixer -t",
+        	"on-click": "kitty --class wiremix -e wiremix",
+        	"on-click-right": "pamixer -t",
         	"on-scroll-up": "pamixer -i 5",
         	"on-scroll-down": "pamixer -d 5",
         	"scroll-step": 5,
@@ -58,7 +59,8 @@
         	"tooltip-format": "{essid} - {ifname} via {gwaddr}",
         	"format-linked": "{ifname} (No IP)",
         	"format-disconnected": "Disconnected ⚠",
-        	"format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
+        	"format-alt": "{ifname}:{essid} {ipaddr}/{cidr}",
+        	"on-click": "kitty --class impala -e impala"
     	},
 	"hyprland/workspaces": {
 		"format": "{id}"

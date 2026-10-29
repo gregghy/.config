@@ -19,7 +19,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar")
 	hl.exec_cmd("hyprpaper")
 end)
-
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
@@ -119,7 +118,7 @@ hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + Y", hl.dsp.exec_cmd("kitty --class yazi -e yazi"))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("wofi --show drun"))
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("baomao-ask"))
+hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("baomao-ask"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo()) -- dwindle
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Screenshots/_$(date +%F_%T).png'))
@@ -187,13 +186,29 @@ local function route(class, ws)
 	})
 end
 
-route("zen",            2)
-route("firefox",        2)
-route("herdr",          3)
-route("yazi",           4)
+route("zen", 2)
+route("firefox", 2)
+route("herdr", 3)
+route("yazi", 4)
 route("(TelegramDesktop|org\\.telegram\\.desktop|telegram-desktop)", 5)
-route("nchat",          5)
-route("obsidian",       6)
+route("nchat", 5)
+route("obsidian", 6)
+
+-- Float system TUIs launched from waybar (impala, wiremix).
+hl.window_rule({
+	name = "float-system-tuis",
+	match = { class = "^(impala|wiremix)$" },
+	float = true,
+	center = true,
+})
+
+-- baomao's console: a floating pill centered over the desktop
+hl.window_rule({
+	name = "baomao-ask",
+	match = { class = "^sh\\.baomao\\.ask$" },
+	float = true,
+	center = true,
+})
 
 hl.window_rule({
 	-- Fix some dragging issues with XWayland

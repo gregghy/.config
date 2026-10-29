@@ -5,18 +5,24 @@ Warm gruvbox palette everywhere: kitty, starship, yazi, eza, herdr, mako, GTK.
 
 ## Install on a fresh Arch system
 
+Bare metal: from the Arch ISO, `bash distro/install-arch.sh` runs
+`archinstall --config distro/archinstall.json` (automates locale,
+systemd-boot, minimal profile, pipewire; disk + user stay interactive).
+
 After a base install (pacstrap/archinstall + user created), one line:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/gregghy/.config/main/distro/distro-bootstrap | bash
 ```
 
-`distro/distro-bootstrap` self-clones this repo, installs all packages,
-restores configs and scripts, enables timers, applies system config.
+`distro/distro-bootstrap` self-clones this repo, installs all packages
+and nerd fonts, restores configs and scripts, enables timers, applies
+system config, switches networking to iwd, and brands the OS as 林ux.
 It's idempotent — safe to re-run.
 
 **Manual leftovers** (by design, nothing secret is in git):
 
+- Wi-Fi → reconnect once via `impala` (waybar icon) — system runs on iwd
 - `~/.ssh` keys → `systemctl --user restart ssh-agent`
 - `gh auth login` + `git config --global user.name/user.email`
 - devin CLI, opencode (own installers), flutter SDK → `~/progetti/flutter-sdk`
@@ -35,8 +41,9 @@ It's idempotent — safe to re-run.
 | `nvim/` | LazyVim |
 | `gtk-2.0/` `gtk-3.0/` `QtProject.conf` | GTK/Qt theming |
 | `systemd/user/` | User units + `.wants` enable-symlinks (auto-enabled on restore) |
-| `distro/` | Maintenance + bootstrap scripts |
-| `pkglist.txt` `pkglist-aur.txt` | Package snapshots (127 official + 34 AUR) |
+| `distro/` | Maintenance + bootstrap scripts, `install-arch.sh` + `archinstall.json` (bare-metal) |
+| `fastfetch/` | 林 ASCII logo + config |
+| `pkglist.txt` `pkglist-aur.txt` | Package snapshots (161 official + 32 AUR) |
 | `.bashrc_copy` | Tracked `~/.bashrc` copy — secrets stripped |
 | `environment.d/` `mimeapps.list` `user-dirs.*` `dconf/` `pavucontrol.ini` `pulse/` | XDG/desktop defaults |
 

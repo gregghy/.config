@@ -7,9 +7,10 @@
 #   ~/.config/distro/distro-bootstrap
 #
 # What it does: clones ~/.config, installs all packages (official + AUR via
-# yay), links the distro scripts, restores .bashrc, installs herdr, enables
-# timers/services, applies system config (zram, power profiles, journal cap,
-# pacman cache policy).
+# yay), installs nerd fonts, links the distro scripts, restores .bashrc,
+# installs herdr, enables timers/services, applies system config (zram,
+# power profiles, journal cap, pacman cache policy), switches networking
+# to iwd, and brands the OS as 林ux.
 set -euo pipefail
 
 C="$HOME/.config"
@@ -50,7 +51,21 @@ fi
 info "Installing $(wc -l < "$C/pkglist-aur.txt") AUR packages"
 yay -S --needed --noconfirm - < "$C/pkglist-aur.txt"
 
-# ── 4. scripts + bashrc ─────────────────────────────────────────────
+# ── 4. fonts (no packages — fetched from upstream releases) ─────────
+info "Installing nerd fonts"
+mkdir -p "$HOME/.local/share/fonts"
+install_font() {
+    local dir="$1" url="$2"
+    [ -d "$HOME/.local/share/fonts/$dir" ] && return 0
+    curl -fsSL "$url" -o "/tmp/$dir.zip"
+    unzip -oq "/tmp/$dir.zip" -d "$HOME/.local/share/fonts/$dir"
+    rm "/tmp/$dir.zip"
+}
+install_font MapleMono-NF "https://github.com/subframe7536/maple-font/releases/download/v7.9/MapleMono-NF.zip"
+install_font CommitMono   "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/CommitMono.zip"
+fc-cache -f >/dev/null
+
+# ── 5. scripts + bashrc ─────────────────────────────────────────────
 info "Linking distro scripts"
 mkdir -p "$HOME/.local/bin"
 for s in distro-clean distro-clean-root distro-power-setup; do
@@ -61,7 +76,7 @@ sudo install -m755 "$C/distro/distro-clean-root" /usr/local/bin/distro-clean-roo
 info "Restoring .bashrc (tracked copy, secrets stripped)"
 cp "$C/.bashrc_copy" "$HOME/.bashrc"
 
-# ── 5. herdr (binary, not a package) + devin orchestration skill ────
+# ── 6. herdr (binary, not a package) + devin orchestration skill ────
 if ! command -v herdr >/dev/null; then
     info "Installing herdr"
     curl -fL -o "$HOME/.local/bin/herdr" \
@@ -72,12 +87,12 @@ mkdir -p "$HOME/.config/devin/skills/herdr"
 curl -fsSL -o "$HOME/.config/devin/skills/herdr/SKILL.md" \
     https://raw.githubusercontent.com/herdrdev/herdr/master/skills/herdr/SKILL.md
 
-# ── 6. user units + timers ──────────────────────────────────────────
+# ── 7. user units + timers ──────────────────────────────────────────
 info "Enabling user services (tracked .wants symlinks)"
 systemctl --user daemon-reload
 systemctl --user enable --now distro-clean.timer ssh-agent.service 2>/dev/null || true
 
-# ── 7. system config ────────────────────────────────────────────────
+# ── 8. system config ────────────────────────────────────────────────
 info "Applying system config (zram, power profiles, journal cap)"
 sudo "$C/distro/distro-power-setup"
 sudo "$C/distro/distro-clean-root"
@@ -85,11 +100,37 @@ sudo "$C/distro/distro-clean-root"
 info "Enabling system timers"
 sudo systemctl enable --now paccache.timer reflector.timer 2>/dev/null || true
 
+# ── 9. 林ux — iwd networking + branding ─────────────────────────────
+if ! systemctl is-enabled --quiet iwd; then
+    info "Switching networking to iwd (+ systemd-resolved + networkd)"
+    sudo mkdir -p /etc/iwd /etc/systemd/network
+    printf '[General]\nEnableNetworkConfiguration=true\n\n[Network]\nNameResolvingService=systemd\n' \
+        | sudo tee /etc/iwd/main.conf >/dev/null
+    printf '[Match]\nName=en* eth*\n\n[Network]\nDHCP=yes\n' \
+        | sudo tee /etc/systemd/network/20-wired.network >/dev/null
+    systemctl is-enabled --quiet NetworkManager 2>/dev/null \
+        && sudo systemctl disable --now NetworkManager
+    sudo systemctl enable --now iwd systemd-resolved systemd-networkd
+    sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+fi
+if ! grep -q '^NAME="林ux"' /etc/os-release 2>/dev/null; then
+    info "Branding OS → 林ux"
+    tmp=$(mktemp)
+    sed -e 's/^NAME=.*/NAME="林ux"/' \
+        -e 's/^PRETTY_NAME=.*/PRETTY_NAME="林ux"/' \
+        -e 's/^ANSI_COLOR=.*/ANSI_COLOR="38;2;156;207;216"/' \
+        /usr/lib/os-release > "$tmp"
+    sudo install -m644 "$tmp" /etc/os-release && rm -f "$tmp"
+fi
+sudo hostnamectl set-hostname --pretty "林ux" 2>/dev/null || true
+gsettings set org.gnome.desktop.interface font-name 'CommitMono Nerd Font 11' 2>/dev/null || true
+
 echo
 info "Bootstrap complete."
 cat <<'EOF'
 
 Manual steps left:
+  - Wi-Fi:            reconnect once via impala (click the waybar Wi-Fi icon)
   - SSH keys:         copy ~/.ssh from backup, then `systemctl --user restart ssh-agent`
   - gh auth:          `gh auth login`
   - git identity:     git config --global user.name / user.email

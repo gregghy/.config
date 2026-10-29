@@ -1,0 +1,15 @@
+[Unit]
+Description=baomao daemon — the leopard cat's brain
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+# baomao-router is found on PATH; user installs live under ~/.local/bin
+Environment=PATH=/home/gregghy/.local/bin:/usr/local/bin:/usr/bin
+ExecStart=/home/gregghy/.local/bin/baomaod
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

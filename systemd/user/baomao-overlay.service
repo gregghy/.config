@@ -1,0 +1,14 @@
+[Unit]
+Description=baomao overlay — the leopard cat's body (Wayland layer-shell)
+PartOf=graphical-session.target
+After=graphical-session.target baomaod.service
+Wants=baomaod.service
+
+[Service]
+Type=simple
+ExecStart=/home/gregghy/.local/bin/baomao-overlay
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target
