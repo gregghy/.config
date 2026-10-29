@@ -1,3 +1,4 @@
+onboarding = false
 # Omarchy-style herdr config, adapted to this desktop's keymap.
 # Hyprland owns Alt ($mainMod), so alt+ combos that collide with hyprland
 # binds were dropped or moved to the Ctrl+Space prefix / Ctrl+Alt space:
@@ -7,12 +8,15 @@
 # Surviving alt keys (alt+enter, alt+esc, alt+shift+arrows) are free in hyprland.
 
 [theme]
-# Runs on the terminal's own palette (kitty Catppuccin Mocha here)
+# gruvbox = warm/brown palette (matches yazi + wallpapers)
+# alternatives: terminal, catppuccin, tokyo-night, nord, dracula,
+# one-dark, solarized, kanagawa, rose-pine, vesper
 name = "terminal"
 
+auto_switch = false
 [theme.custom]
 # Tab bar on the terminal background like tmux bg=default; dark text on the
-# blue accent for the active tab
+# peach accent for the active tab
 panel_bg = "reset"
 surface_dim = "black"
 
@@ -73,7 +77,7 @@ previous_workspace = "prefix+shift+p"
 next_workspace = "prefix+shift+n"
 
 [ui]
-accent = "blue"
+accent = "peach"
 
 # tmux-style dividers: single-line gaps, no outer frame, no scrollbars
 pane_gaps = false
@@ -88,3 +92,7 @@ tab_bar_right = [{ type = "zoom" }, { type = "hostname" }]
 
 # Hyprland group bar / window title shows "host: workspace"
 window_title = "{hostname}: {workspace}"
+status_indicators = "symbols"
+
+[ui.toast]
+delivery = "system"
