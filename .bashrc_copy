@@ -7,9 +7,46 @@
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+
+# --- pretty terminal (gruvbox) ---
+if command -v eza >/dev/null; then
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -la --icons --group-directories-first'
+    alias lt='eza --tree --icons -L 2'
+fi
+if command -v bat >/dev/null; then
+    alias cat='bat --paging=never'
+    export BAT_THEME="gruvbox-dark"
+fi
+command -v vivid >/dev/null && eval "$(vivid generate gruvbox-dark)"
+command -v fzf >/dev/null && eval "$(fzf --bash)"
+command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 PS1='[\u@\h \W]\$ '
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 #ssh-agent
 eval "$(ssh-agent -s)" && ssh-add ~/.ssh/key && ssh-add ~/.ssh/gitlab_key && clear
 
 eval "$(starship init bash)"
+. "$HOME/.cargo/env"
+
+# Created by `pipx` on 2024-11-12 14:21:46
+export PATH="$PATH:/home/gregghy/.local/bin"
+
+#export WORKON_HOME=~/.virtualenvs
+#source /usr/bin/virtualenvwrapper.sh
+
+export PATH="$HOME/progetti/flutter-sdk/bin:$PATH"
+
+export CHROME_EXECUTABLE=chromium
+
+[ -f "/home/gregghy/.ghcup/env" ] && . "/home/gregghy/.ghcup/env" # ghcup-env
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path bash)"
+
+# opencode
+export PATH=/home/gregghy/.opencode/bin:$PATH
+
+alias sync-media='rsync -aP "serverHome:media/to_local/" "$HOME/torrent/"'
+alias ywin='yazi ~/mnt/serverHome-windows'
