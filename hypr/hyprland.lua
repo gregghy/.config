@@ -146,6 +146,10 @@ hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume 
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume -5"))
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"))
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle"))
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("mpc toggle"))
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("mpc prev"))
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd("mpc next"))
+hl.bind("XF86AudioStop", hl.dsp.exec_cmd("mpc stop"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | wofi --dmenu | cliphist decode | wl-copy"))
 hl.bind("CTRL + ALT + N", hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight"))
 

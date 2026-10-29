@@ -76,6 +76,12 @@ sudo install -m755 "$C/distro/distro-clean-root" /usr/local/bin/distro-clean-roo
 info "Restoring .bashrc (tracked copy, secrets stripped)"
 cp "$C/.bashrc_copy" "$HOME/.bashrc"
 
+info "Linking desktop entries"
+mkdir -p "$HOME/.local/share/applications"
+for d in "$C"/applications/*.desktop; do
+    ln -sf "$d" "$HOME/.local/share/applications/$(basename "$d")"
+done
+
 # ── 6. herdr (binary, not a package) + devin orchestration skill ────
 if ! command -v herdr >/dev/null; then
     info "Installing herdr"

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=rmpc
+Comment=Terminal music player (mpd client)
+Exec=kitty --class rmpc -e rmpc
+Icon=multimedia-audio-player
+Terminal=false
+Categories=AudioVideo;Audio;Player;
+Keywords=music;mpd;

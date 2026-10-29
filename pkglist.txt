@@ -57,6 +57,7 @@ luarocks
 lxappearance
 mako
 mesa-utils
+mpc
 mpd
 mpv
 neovim
@@ -67,8 +68,8 @@ nmap
 noto-fonts-cjk
 noto-fonts-emoji
 npm
-obs-studio
 obsidian
+obs-studio
 ocaml
 openal
 openconnect
