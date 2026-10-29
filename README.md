@@ -64,6 +64,7 @@ It's idempotent — safe to re-run.
 | `Alt+Ctrl+num` / `Alt+scroll` | move window to workspace / cycle workspaces |
 | `Alt+L` | lock |
 | `Alt+S` / `Alt+N,B` | screenshot region / brightness |
+| `Alt+D` / `Ctrl+Alt+D` | screen record region / full output (toggle → `~/Videos`) |
 
 **herdr** (`Alt+Shift` namespace — no prefix, no clash with Hyprland's Alt):
 

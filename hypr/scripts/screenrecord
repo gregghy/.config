@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Toggle screen recording, omarchy-style.
+#   screenrecord          → drag-select region with slurp
+#   screenrecord output   → whole display
+# Press the bind again to stop — file lands in ~/Videos.
+set -u
+VIDEOS="${XDG_VIDEOS_DIR:-$HOME/Videos}"
+mkdir -p "$VIDEOS"
+
+if pgrep -x wl-screenrec >/dev/null || pgrep -x wf-recorder >/dev/null; then
+	pkill -INT -x wl-screenrec; pkill -INT -x wf-recorder
+	notify-send "Screen recording saved to ~/Videos" -t 2000
+	exit 0
+fi
+
+file="$VIDEOS/screenrecording-$(date +%F_%H-%M-%S).mp4"
+rec() {
+	if command -v wl-screenrec >/dev/null; then
+		wl-screenrec -f "$file" --audio \
+			--ffmpeg-encoder-options="-c:v libx264 -crf 23 -preset medium -movflags +faststart" "$@"
+	else
+		wf-recorder -f "$file" -a \
+			-c libx264 -p crf=23 -p preset=medium -p movflags=+faststart "$@"
+	fi
+}
+
+if [[ ${1:-} == output ]]; then
+	notify-send "Recording whole screen…" -t 1000
+else
+	region=$(slurp) || exit 1
+	notify-send "Recording region…" -t 1000
+	sleep 1
+	rec -g "$region"
+	exit 0
+fi
+sleep 1
+rec
