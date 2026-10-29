@@ -38,8 +38,8 @@ focus_pane_down = "alt+shift+down"
 focus_pane_up = "alt+shift+up"
 focus_pane_right = "alt+shift+right"
 
-split_horizontal = ["alt+enter", "alt+shift+q"]
-split_vertical = "alt+shift+enter"
+split_horizontal = "alt+enter"
+split_vertical = ["alt+shift+enter", "alt+shift+q"]
 close_pane = ["alt+shift+c", "alt+esc"]
 zoom = "alt+shift+z"
 last_pane = "alt+shift+;"

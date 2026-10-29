@@ -60,7 +60,7 @@ It's idempotent — safe to re-run.
 | Keys | Action |
 |---|---|
 | `Alt+Shift+arrows` | focus pane · `Ctrl+Alt+Shift+arrows` resize |
-| `Alt+Shift+Q` / `Alt+Enter` | split h · `Alt+Shift+Enter` split v |
+| `Alt+Shift+Q` / `Alt+Shift+Enter` | split v · `Alt+Enter` split h |
 | `Alt+Shift+C`/`Alt+Esc` | close pane · `Alt+Shift+Z` zoom · `Tab` cycle |
 | `Alt+Shift+N`/`T` / `1..9` / `[`/`]` | new tab / switch / move tab |
 | `Alt+Shift+R` `K` / `Ctrl+P`/`N` | rename·close tab / cycle tabs |
