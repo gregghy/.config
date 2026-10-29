@@ -1,33 +1,32 @@
-android-platform 36_r02-1
-android-sdk 26.1.1-2
-android-sdk-build-tools r35.0.1-1
-android-sdk-cmdline-tools-latest 19.0-1
-android-sdk-platform-tools 36.0.0-1
-android-studio 2024.3.2.15-1
-antigravity 1.23.2-1
-brillo 1.4.13-1
-cursor-bin 2.5.26-1
-defold-bin 1.10.2.5944edd-1
-dracula-gtk-theme v4.0.0-1
-dracula-icons-git 1.0.0.6232e521-1
-gnu-netcat 0.7.1-11
-gruvbox-dark-gtk 1.0.2-1
-gruvbox-dark-icons-gtk 1.0.0-1
-gruvbox-material-icon-theme-git r25.bb306ae97-1
-kiro-bin 0.1.20-1
-libresprite-bin 1.1-1
-mictray 0.3.1-1
-mullvad-vpn-bin 2025.8-1
-nchat-git 5.19.18.r19.ge424aea-1
-powerpill-me 2021.11-19
-python312 3.12.13-1
-spim-svn 764-1
-trae-bin 2.3.21083-1
-windsurf 1.9577.43-1
-wlogout 1.2.2-0
-wl-screenrec
-wluma 4.10.0-1
-yay-bin 12.5.7-1
-yay-bin-debug 12.5.7-1
-zen-browser-bin 1.13.2b-3
-zoom 7.2.1.5760-1
+android-platform
+android-sdk
+android-sdk-build-tools
+android-sdk-cmdline-tools-latest
+android-sdk-platform-tools
+android-studio
+antigravity
+brillo
+cursor-bin
+defold-bin
+dracula-gtk-theme
+dracula-icons-git
+gnu-netcat
+gruvbox-dark-gtk
+gruvbox-dark-icons-gtk
+gruvbox-material-icon-theme-git
+kiro-bin
+libresprite-bin
+mictray
+mullvad-vpn-bin
+nchat-git
+powerpill-me
+python312
+spim-svn
+trae-bin
+windsurf
+wlogout
+wluma
+yay-bin
+yay-bin-debug
+zen-browser-bin
+zoom
