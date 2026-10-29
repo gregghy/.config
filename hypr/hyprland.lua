@@ -115,8 +115,7 @@ local mainMod = "ALT" -- Sets Alt as main modifier
 
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("kitty"))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nemo"))
-hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("kitty --class yazi -e yazi"))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("kitty --class yazi -e yazi"))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("wofi --show drun"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo()) -- dwindle
@@ -188,9 +187,8 @@ end
 route("zen",            2)
 route("firefox",        2)
 route("herdr",          3)
-route("nemo",           4)
 route("yazi",           4)
-route("(?i)telegram.*", 5)
+route("(TelegramDesktop|org\\.telegram\\.desktop|telegram-desktop)", 5)
 route("obsidian",       6)
 
 hl.window_rule({

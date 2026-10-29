@@ -48,7 +48,7 @@ It's idempotent — safe to re-run.
 |---|---|
 | `Alt+Q` / `Alt+F` | kitty / wofi launcher |
 | `Alt+H` | herdr (persistent terminal) |
-| `Alt+E` / `Alt+Shift+E` | nemo / yazi |
+| `Alt+E` | yazi |
 | `Alt+T` | toggle waybar · `Alt+C` kill window |
 | `Alt+arrows` / `Alt+1..9` | focus window / workspace |
 | `Alt+Ctrl+num` / `Alt+scroll` | move window to workspace / cycle workspaces |
@@ -68,16 +68,16 @@ It's idempotent — safe to re-run.
 | `Alt+Shift+D` `Ctrl+Q` `/` `` ` `` | detach / reload / help / copy mode |
 | `Ctrl+Space`+`q` / `Shift+arrows` | smart split (auto dir) / swap pane — commands need prefix (0.9.5) |
 
-Only `Alt+Shift+E` is taken (Hyprland → yazi).
+`Alt+Shift` is fully free for herdr — Hyprland binds nothing on it.
 us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to herdr).
 
 **Workspaces** (persistent + named, apps auto-route — see `hl.window_rule`/`hl.workspace_rule` in `hyprland.lua`):
 
 | 1 `term` | 2 `web` | 3 `herdr` | 4 `files` | 5 `chat` | 6 `notes` |
 |---|---|---|---|---|---|
-| kitty (default) | zen · firefox | `kitty --class herdr` | nemo · `kitty --class yazi` | telegram | obsidian |
+| kitty (default) | zen · firefox | `kitty --class herdr` | `kitty --class yazi` | telegram | obsidian |
 
-Launching a routed app pulls you to its workspace. `Alt+H`/`Alt+Shift+E` launch
+Launching a routed app pulls you to its workspace. `Alt+H`/`Alt+E` launch
 with dedicated kitty `--class` so the rules can match them.
 
 **Shell** (bash): `ls`/`ll`/`lt` → eza with yazi's icons+colors ·

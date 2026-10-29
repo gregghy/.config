@@ -52,7 +52,6 @@ lxappearance
 mako
 mesa-utils
 mpv
-nemo
 neovim
 net-tools
 networkmanager
