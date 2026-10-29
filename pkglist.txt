@@ -144,6 +144,7 @@ waybar
 wf-recorder
 windsurf
 wiremix
+wl-clipboard
 wlogout
 wluma
 wofi

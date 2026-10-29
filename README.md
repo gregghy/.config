@@ -82,6 +82,20 @@ It's idempotent — safe to re-run.
 `Alt+Shift` is fully free for herdr — Hyprland binds nothing on it.
 us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to herdr).
 
+**nchat** (`nchat-git` fork — kitty image previews, two-column layout, custom
+keys in `nchat/key.conf` + kitty passthroughs in `kitty/kitty.conf`):
+
+| Keys | Action |
+|---|---|
+| `↑`/`↓` | navigate contact list (when input empty) · cursor in text |
+| `Enter` / `Shift+Enter` | send / newline in message |
+| `Ctrl+M` | attach file (kitty maps it to `Esc m`) |
+| `Ctrl+F` / `Alt+U` | find in chat / jump to unread chat |
+| `Ctrl+V` | paste clipboard text (image → attach) — needs `wl-clipboard` |
+| `Ctrl+C` | copy mouse-selected text (kitty `copy_or_interrupt`) |
+| `Ctrl+↑` / `↑`/`↓` | select message / move selection |
+| `Ctrl+N` / `Ctrl+S` | goto chat / emoji picker |
+
 **Workspaces** (named, apps auto-route — see `hl.window_rule`/`hl.workspace_rule` in `hyprland.lua`):
 
 | 1 `term` | 2 `web` | 3 `herdr` | 4 `files` | 5 `chat` | 6 `notes` |
