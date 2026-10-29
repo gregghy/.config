@@ -11,7 +11,7 @@ onboarding = false
 # gruvbox = warm/brown palette (matches yazi + wallpapers)
 # alternatives: terminal, catppuccin, tokyo-night, nord, dracula,
 # one-dark, solarized, kanagawa, rose-pine, vesper
-name = "terminal"
+name = "gruvbox"
 
 auto_switch = false
 [theme.custom]
@@ -75,6 +75,28 @@ rename_workspace = "prefix+shift+r"
 close_workspace = "prefix+shift+k"
 previous_workspace = "prefix+shift+p"
 next_workspace = "prefix+shift+n"
+
+# Swap pane positions — no built-in key action, bound via `herdr pane swap`.
+# "shift = move", same convention as move_tab's alt+shift+arrows.
+[[keys.command]]
+key = "prefix+shift+left"
+type = "shell"
+command = "/home/gregghy/.local/bin/herdr pane swap --direction left --current"
+
+[[keys.command]]
+key = "prefix+shift+right"
+type = "shell"
+command = "/home/gregghy/.local/bin/herdr pane swap --direction right --current"
+
+[[keys.command]]
+key = "prefix+shift+up"
+type = "shell"
+command = "/home/gregghy/.local/bin/herdr pane swap --direction up --current"
+
+[[keys.command]]
+key = "prefix+shift+down"
+type = "shell"
+command = "/home/gregghy/.local/bin/herdr pane swap --direction down --current"
 
 [ui]
 accent = "peach"
