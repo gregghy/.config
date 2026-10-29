@@ -163,9 +163,9 @@ hl.window_rule({
 })
 
 -- Fixed workspaces: 1 term, 2 web, 3 herdr, 4 files, 5 chat, 6 notes.
--- Persistent so they always exist; named for waybar {name}.
+-- Named for waybar; they exist only while occupied or focused.
 local function named_ws(id, name)
-    hl.workspace_rule({ workspace = tostring(id), persistent = true, default_name = name })
+    hl.workspace_rule({ workspace = tostring(id), default_name = name })
 end
 
 named_ws(1, "term")

@@ -71,7 +71,7 @@ It's idempotent — safe to re-run.
 `Alt+Shift` is fully free for herdr — Hyprland binds nothing on it.
 us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to herdr).
 
-**Workspaces** (persistent + named, apps auto-route — see `hl.window_rule`/`hl.workspace_rule` in `hyprland.lua`):
+**Workspaces** (named, apps auto-route — see `hl.window_rule`/`hl.workspace_rule` in `hyprland.lua`):
 
 | 1 `term` | 2 `web` | 3 `herdr` | 4 `files` | 5 `chat` | 6 `notes` |
 |---|---|---|---|---|---|
