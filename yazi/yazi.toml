@@ -18,8 +18,8 @@ edit = [
 [open]
 rules = [
   { mime = "image/*", use = [ "zen", "viewnior", "system" ] },
-  { mime = "video/*", use = [ "zen", "play", "system" ] },
-  { mime = "audio/*", use = [ "zen", "play", "system" ] },
+  { mime = "video/*", use = [ "play", "zen", "system" ] },
+  { mime = "audio/*", use = [ "play", "zen", "system" ] },
   { mime = "text/*", use = [ "zen", "edit", "system" ] },
   { mime = "*", use = [ "zen", "system" ] },
 ]
