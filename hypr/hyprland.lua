@@ -210,6 +210,7 @@ hl.window_rule({
 	match = { class = "^sh\\.baomao\\.ask$" },
 	float = true,
 	center = true,
+	border_size = 0,
 })
 
 hl.window_rule({
