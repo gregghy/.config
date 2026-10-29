@@ -42,6 +42,7 @@ tooltip {
 
 #custom-power_profile,
 #custom-weather,
+#custom-dnd,
 #clock,
 #battery,
 #pulseaudio,
@@ -110,17 +111,24 @@ tooltip {
 #bluetooth {
     background: #1d2021;
     color: #89b4fa;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px
+    margin-right: 0px;
+    border-left: 0px;
 } 
 
 #pulseaudio {
     background: #1d2021;
     color: #f2c993;
+    margin-right: 0px;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-dnd {
+    background: #1d2021;
+    color: #cba6f7;
     border-radius: 0px 10px 10px 0px;
+    border-left: 0px;
     margin-right: 10px;
-    border-right: 0px;
-    border-right: 0px;
 }
 
 #pulseaudio.microphone {

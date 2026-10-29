@@ -7,6 +7,9 @@
 set -euo pipefail
 repo="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
 
+echo "==> Unblocking rfkill radios (bluetooth soft-block breaks bluetui)"
+rfkill unblock bluetooth || true
+
 echo "==> pacman hook: auto-export pkglists"
 install -d /etc/pacman.d/hooks
 cat > /etc/pacman.d/hooks/pkglist-export.hook <<EOF
