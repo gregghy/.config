@@ -19,6 +19,7 @@ kiro-bin
 libresprite-bin
 mictray
 mullvad-vpn-bin
+nchat-git
 pm2ml
 powerpill-me
 python3-memoizedb
