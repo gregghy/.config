@@ -1,0 +1,6 @@
+[Unit]
+Description=Sync media from serverHome to_local
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rsync -aP -e "ssh -i %h/.ssh/key -o IdentitiesOnly=yes -o BatchMode=yes" serverHome:media/to_local/ %h/torrent/

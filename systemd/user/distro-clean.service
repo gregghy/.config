@@ -1,0 +1,6 @@
+[Unit]
+Description=User-level distro cleanup (caches, status report)
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/distro-clean

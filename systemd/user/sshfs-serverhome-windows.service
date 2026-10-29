@@ -1,0 +1,12 @@
+[Unit]
+Description=SSHFS mount of serverHome:/mnt/windows
+After=default.target
+
+[Service]
+ExecStart=/usr/bin/sshfs -f serverHome:/mnt/windows %h/mnt/serverHome-windows -o reconnect,idmap=user,ServerAliveInterval=15,dir_cache=yes,kernel_cache,dcache_timeout=3600,entry_timeout=3600,attr_timeout=3600,negative_timeout=10,auto_cache
+ExecStop=/usr/bin/fusermount3 -u %h/mnt/serverHome-windows
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

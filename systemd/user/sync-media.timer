@@ -1,0 +1,9 @@
+[Unit]
+Description=Periodic media sync from serverHome
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=15min
+
+[Install]
+WantedBy=timers.target

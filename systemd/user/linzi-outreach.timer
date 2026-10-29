@@ -1,0 +1,10 @@
+[Unit]
+Description=LinZi institutional outreach - daily block send
+
+[Timer]
+# one campaign block per day, mid-morning
+OnCalendar=*-*-* 09:30
+Persistent=true
+
+[Install]
+WantedBy=timers.target

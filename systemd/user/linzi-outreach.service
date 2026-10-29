@@ -1,0 +1,10 @@
+[Unit]
+Description=LinZi institutional outreach - send today's block
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/progetti/linzi/market_research
+ExecStart=%h/progetti/linzi/market_research/outreach.py campaign --enrich --go
+# log appends to outreach/campaign.log
+StandardOutput=append:%h/progetti/linzi/market_research/outreach/campaign.log
+StandardError=append:%h/progetti/linzi/market_research/outreach/campaign.log

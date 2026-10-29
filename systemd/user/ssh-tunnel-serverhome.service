@@ -1,0 +1,12 @@
+[Unit]
+Description=SSH tunnel to serverHome for FileBrowser Quantum (localhost:8321)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/home/gregghy/.local/bin/ssh-tunnel-serverhome.sh
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=default.target
