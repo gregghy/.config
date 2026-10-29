@@ -1,7 +1,7 @@
 # ~/.config
 
 Dotfiles for my Arch + Hyprland setup (Framework 13, AMD Ryzen 7040) — OS
-branded **林ux**. Warm gruvbox palette everywhere: kitty, starship, yazi,
+branded **林UX**. Warm gruvbox palette everywhere: kitty, starship, yazi,
 eza, herdr, mako, GTK. System font: CommitMono Nerd Font (fetched by
 bootstrap, not committed). Networking: iwd + impala (no NetworkManager).
 
@@ -19,7 +19,7 @@ curl -fsSL https://raw.githubusercontent.com/gregghy/.config/main/distro/distro-
 
 `distro/distro-bootstrap` self-clones this repo, installs all packages
 and nerd fonts, restores configs and scripts, enables timers, applies
-system config, switches networking to iwd, and brands the OS as 林ux.
+system config, switches networking to iwd, and brands the OS as 林UX.
 It's idempotent — safe to re-run.
 
 **Manual leftovers** (by design, nothing secret is in git):
@@ -178,9 +178,9 @@ Battery: `powerprofilesctl`, `sudo powertop`.
 | iwd self-DHCP + resolved DNS | `/etc/iwd/main.conf` | `distro-bootstrap` |
 | Wired-ethernet DHCP | `/etc/systemd/network/20-wired.network` | `distro-bootstrap` |
 | iwd/resolved/networkd on, NM off; resolv.conf → resolved stub | systemctl + `/etc/resolv.conf` | `distro-bootstrap` |
-| OS name 林ux, pretty hostname | `/etc/os-release`, `hostnamectl --pretty` | `distro-bootstrap` |
+| OS name 林UX, pretty hostname | `/etc/os-release`, `hostnamectl --pretty` | `distro-bootstrap` |
 | Nerd fonts (Maple Mono, CommitMono) | `~/.local/share/fonts/` | `distro-bootstrap` |
 | GTK font → CommitMono 11 | `gsettings` | `distro-bootstrap` |
 | pkglist auto-export hook | `/etc/pacman.d/hooks/pkglist-export.hook` | `distro-linx-polish` |
 | Plymouth 林 splash + initramfs hook | `/usr/share/plymouth/themes/linx/`, `/etc/mkinitcpio.conf` | `distro-linx-polish` |
-| GRUB `splash` flag + 林ux entries | `/etc/default/grub` → `grub-mkconfig` | `distro-linx-polish` |
+| GRUB `splash` flag + 林UX entries | `/etc/default/grub` → `grub-mkconfig` | `distro-linx-polish` |

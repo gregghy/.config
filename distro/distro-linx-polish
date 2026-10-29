@@ -2,7 +2,7 @@
 # distro-linx-polish — system-level bits that need root:
 #   - pacman hook exporting pkglist.txt/pkglist-aur.txt on every transaction
 #   - plymouth 林 boot splash + mkinitcpio hook
-#   - GRUB: splash kernel flag + 林ux menu names
+#   - GRUB: splash kernel flag + 林UX menu names
 # Run: sudo ~/.config/distro/distro-linx-polish
 set -euo pipefail
 repo="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
@@ -54,10 +54,10 @@ EOF
 fi
 
 if command -v grub-mkconfig >/dev/null && [ -d /boot/grub ]; then
-	echo "==> GRUB: splash flag + 林ux menu names"
+	echo "==> GRUB: splash flag + 林UX menu names"
 	grep -qw splash /etc/default/grub || \
 		sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 splash"/' /etc/default/grub
-	sed -i 's/^GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="林ux"/' /etc/default/grub
+	sed -i 's/^GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="林UX"/' /etc/default/grub
 	grub-mkconfig -o /boot/grub/grub.cfg
 fi
 

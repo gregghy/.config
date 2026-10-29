@@ -10,7 +10,7 @@
 # yay), installs nerd fonts, links the distro scripts, restores .bashrc,
 # installs herdr, enables timers/services, applies system config (zram,
 # power profiles, journal cap, pacman cache policy), switches networking
-# to iwd, and brands the OS as 林ux.
+# to iwd, and brands the OS as 林UX.
 set -euo pipefail
 
 C="$HOME/.config"
@@ -106,7 +106,7 @@ sudo "$C/distro/distro-clean-root"
 info "Enabling system timers"
 sudo systemctl enable --now paccache.timer reflector.timer 2>/dev/null || true
 
-# ── 9. 林ux — iwd networking + branding ─────────────────────────────
+# ── 9. 林UX — iwd networking + branding ─────────────────────────────
 if ! systemctl is-enabled --quiet iwd; then
     info "Switching networking to iwd (+ systemd-resolved + networkd)"
     sudo mkdir -p /etc/iwd /etc/systemd/network
@@ -119,16 +119,16 @@ if ! systemctl is-enabled --quiet iwd; then
     sudo systemctl enable --now iwd systemd-resolved systemd-networkd
     sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 fi
-if ! grep -q '^NAME="林ux"' /etc/os-release 2>/dev/null; then
-    info "Branding OS → 林ux"
+if ! grep -q '^NAME="林UX"' /etc/os-release 2>/dev/null; then
+    info "Branding OS → 林UX"
     tmp=$(mktemp)
-    sed -e 's/^NAME=.*/NAME="林ux"/' \
-        -e 's/^PRETTY_NAME=.*/PRETTY_NAME="林ux"/' \
+    sed -e 's/^NAME=.*/NAME="林UX"/' \
+        -e 's/^PRETTY_NAME=.*/PRETTY_NAME="林UX"/' \
         -e 's/^ANSI_COLOR=.*/ANSI_COLOR="38;2;156;207;216"/' \
         /usr/lib/os-release > "$tmp"
     sudo install -m644 "$tmp" /etc/os-release && rm -f "$tmp"
 fi
-sudo hostnamectl set-hostname --pretty "林ux" 2>/dev/null || true
+sudo hostnamectl set-hostname --pretty "林UX" 2>/dev/null || true
 gsettings set org.gnome.desktop.interface font-name 'CommitMono Nerd Font 11' 2>/dev/null || true
 
 # ── 10. pkglist pacman hook + plymouth splash + grub branding ───────

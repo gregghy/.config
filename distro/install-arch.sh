@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ===================================================================
-# 林ux bare-metal installer — run from the Arch ISO live environment.
+# 林UX bare-metal installer — run from the Arch ISO live environment.
 #
 #   bash install-arch.sh
 #
@@ -13,7 +13,7 @@
 #      - Disk selection  (a wrong choice wipes data — pick deliberately)
 #      - User + password (credentials don't belong in a git repo)
 #   4. After reboot: clone this repo to ~/.config and run install.sh
-#      (installs all 161+32 packages, fonts, iwd setup, 林ux branding)
+#      (installs all 161+32 packages, fonts, iwd setup, 林UX branding)
 #
 # If archinstall rejects the JSON (schema changed across ISO versions),
 # it falls back to the fully guided TUI — the result is the same.

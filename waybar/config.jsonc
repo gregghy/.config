@@ -16,7 +16,7 @@
 	},
 
   "clock": {
-    "format": "林ux · {:%H:%M   %a %e %b}",
+    "format": "林UX · {:%H:%M   %a %e %b}",
 		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
   },
 
