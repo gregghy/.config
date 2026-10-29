@@ -145,7 +145,6 @@ wf-recorder
 windsurf
 wiremix
 wlogout
-wl-screenrec
 wluma
 wofi
 xdg-desktop-portal-hyprland

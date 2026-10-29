@@ -25,6 +25,7 @@ spim-svn 764-1
 trae-bin 2.3.21083-1
 windsurf 1.9577.43-1
 wlogout 1.2.2-0
+wl-screenrec
 wluma 4.10.0-1
 yay-bin 12.5.7-1
 yay-bin-debug 12.5.7-1
