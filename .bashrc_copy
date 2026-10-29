@@ -10,15 +10,15 @@ alias grep='grep --color=auto'
 
 # --- pretty terminal (gruvbox) ---
 if command -v eza >/dev/null; then
-    alias ls='eza --icons --group-directories-first'
-    alias ll='eza -la --icons --group-directories-first'
-    alias lt='eza --tree --icons -L 2'
+  alias ls='eza --icons --group-directories-first'
+  alias ll='eza -la --icons --group-directories-first'
+  alias lt='eza --tree --icons -L 2'
 fi
 if command -v bat >/dev/null; then
-    alias cat='bat --paging=never'
-    export BAT_THEME="gruvbox-dark"
+  alias cat='bat --paging=never'
+  export BAT_THEME="gruvbox-dark"
 fi
-command -v vivid >/dev/null && eval "$(vivid generate gruvbox-dark)"
+command -v vivid >/dev/null && export LS_COLORS="$(vivid generate gruvbox-dark)"
 command -v fzf >/dev/null && eval "$(fzf --bash)"
 command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 PS1='[\u@\h \W]\$ '
