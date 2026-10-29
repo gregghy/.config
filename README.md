@@ -71,6 +71,15 @@ It's idempotent — safe to re-run.
 Only `Alt+Shift+E` is taken (Hyprland → yazi).
 us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to herdr).
 
+**Workspaces** (persistent + named, apps auto-route — see `hl.window_rule`/`hl.workspace_rule` in `hyprland.lua`):
+
+| 1 `term` | 2 `web` | 3 `herdr` | 4 `files` | 5 `chat` | 6 `notes` |
+|---|---|---|---|---|---|
+| kitty (default) | zen · firefox | `kitty --class herdr` | nemo · `kitty --class yazi` | telegram | obsidian |
+
+Launching a routed app pulls you to its workspace. `Alt+H`/`Alt+Shift+E` launch
+with dedicated kitty `--class` so the rules can match them.
+
 **Shell** (bash): `ls`/`ll`/`lt` → eza with yazi's icons+colors ·
 `cat` → bat (gruvbox-dark) · `Ctrl+R`/`Ctrl+T` fzf · `z <dir>` zoxide ·
 `❯` turns red on failed commands

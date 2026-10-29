@@ -116,14 +116,14 @@ local mainMod = "ALT" -- Sets Alt as main modifier
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("kitty"))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nemo"))
-hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("kitty -e yazi"))
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("kitty --class yazi -e yazi"))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("wofi --show drun"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo()) -- dwindle
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd('grim -g "$(slurp)" ~/Screenshots/_$(date +%F_%T).png'))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
-hl.bind(mainMod .. " + H", hl.dsp.exec_cmd("kitty -e herdr"))
+hl.bind(mainMod .. " + H", hl.dsp.exec_cmd("kitty --class herdr -e herdr"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
@@ -162,6 +162,36 @@ hl.window_rule({
     match          = { class = ".*" },
     suppress_event = "maximize",
 })
+
+-- Fixed workspaces: 1 term, 2 web, 3 herdr, 4 files, 5 chat, 6 notes.
+-- Persistent so they always exist; named for waybar {name}.
+local function named_ws(id, name)
+    hl.workspace_rule({ workspace = tostring(id), persistent = true, default_name = name })
+end
+
+named_ws(1, "term")
+named_ws(2, "web")
+named_ws(3, "herdr")
+named_ws(4, "files")
+named_ws(5, "chat")
+named_ws(6, "notes")
+
+-- Route apps to their workspace (match is regex, anchored).
+local function route(class, ws)
+    hl.window_rule({
+        name      = "route-" .. class,
+        match     = { class = "^" .. class .. "$" },
+        workspace = tostring(ws),
+    })
+end
+
+route("zen",            2)
+route("firefox",        2)
+route("herdr",          3)
+route("nemo",           4)
+route("yazi",           4)
+route("(?i)telegram.*", 5)
+route("obsidian",       6)
 
 hl.window_rule({
     -- Fix some dragging issues with XWayland
