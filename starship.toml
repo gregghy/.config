@@ -1,6 +1,6 @@
 # Minimal gruvbox prompt: ~/path ❯ (+git branch when in a repo)
 
-format = "$directory$git_branch$character"
+format = "$os$directory$git_branch$character"
 
 palette = "gruvbox_dark"
 
@@ -27,6 +27,14 @@ format = "[$path]($style) "
 symbol = ""
 style = "purple"
 format = "[$symbol$branch]($style) "
+
+[os]
+disabled = false
+format = "[$symbol]($style) "
+style = "bold aqua"
+
+[os.symbols]
+Arch = "林"
 
 [character]
 success_symbol = "[❯](bold green)"

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Toggle hyprsunset night light (4000K).
+if pgrep -x hyprsunset >/dev/null; then
+	pkill -x hyprsunset
+	notify-send "Night light off" -t 1500
+else
+	setsid hyprsunset -t 4000 >/dev/null 2>&1 &
+	notify-send "Night light on (4000K)" -t 1500
+fi

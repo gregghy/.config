@@ -10,6 +10,7 @@ apache
 base
 base-devel
 bat
+bluetui
 bluez
 bluez-utils
 brightnessctl
@@ -17,6 +18,7 @@ brillo
 chafa
 chromium
 clang
+cliphist
 cmake
 code
 cowsay
@@ -48,9 +50,11 @@ gruvbox-dark-icons-gtk
 gruvbox-material-icon-theme-git
 gvfs
 gvfs-mtp
+hypridle
 hyprland
 hyprlock
 hyprpaper
+hyprsunset
 igraph
 imagemagick
 impala
@@ -95,6 +99,7 @@ pamixer
 pavucontrol
 perl-mime-tools
 pipewire-pulse
+plymouth
 polkit-gnome
 powerpill-me
 power-profiles-daemon
@@ -123,6 +128,7 @@ starship
 strace
 swappy
 swaybg
+swayosd
 tailscale
 telegram-desktop
 timidity++

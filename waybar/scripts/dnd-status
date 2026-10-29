@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Prints bell state for the waybar custom/dnd module (json output).
+if makoctl mode | grep -q do-not-disturb; then
+	printf '{"text": "󰂛", "tooltip": "Notifications: off (click to enable)", "class": "dnd"}\n'
+else
+	printf '{"text": "󰂚", "tooltip": "Notifications: on (click to silence)", "class": ""}\n'
+fi

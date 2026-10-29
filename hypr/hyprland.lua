@@ -18,6 +18,10 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user start hyprland-session.target")
 	hl.exec_cmd("waybar")
 	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("swayosd-server")
+	hl.exec_cmd("hypridle")
+	hl.exec_cmd("wl-paste --type text --watch cliphist store")
+	hl.exec_cmd("wl-paste --type image --watch cliphist store")
 end)
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
@@ -134,9 +138,16 @@ hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
 
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("brightnessctl s 10%-"))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brightnessctl s 10%+"))
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s +10%"))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swayosd-client --brightness -5"))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("swayosd-client --brightness +5"))
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("swayosd-client --brightness +5"))
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness -5"))
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("swayosd-client --output-volume +5"))
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("swayosd-client --output-volume -5"))
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("swayosd-client --output-volume mute-toggle"))
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("swayosd-client --input-volume mute-toggle"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | wofi --dmenu | cliphist decode | wl-copy"))
+hl.bind("CTRL + ALT + N", hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight"))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + CTRL + [0-9]
@@ -199,7 +210,7 @@ route("obsidian", 6)
 -- Float system TUIs launched from waybar (impala, wiremix).
 hl.window_rule({
 	name = "float-system-tuis",
-	match = { class = "^(impala|wiremix)$" },
+	match = { class = "^(impala|wiremix|bluetui)$" },
 	float = true,
 	center = true,
 })

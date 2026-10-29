@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Refresh pkglist.txt / pkglist-aur.txt after every pacman transaction.
+# Installed as a pacman PostTransaction hook by distro-bootstrap.
+set -u
+repo="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+owner="$(stat -c %U "$repo")"
+runuser -u "$owner" -- sh -c "pacman -Qqen > '$repo/pkglist.txt'; pacman -Qqem > '$repo/pkglist-aur.txt'"

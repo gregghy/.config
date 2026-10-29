@@ -39,7 +39,7 @@ It's idempotent — safe to re-run.
 | `eza/` | `theme.yml` (generated — do not edit), `generate-theme.py` |
 | `yazi/` | File manager + `gruvbox-dark` flavor |
 | `herdr/` | Persistent terminal workspaces config |
-| `mako/` `waybar/` `wofi/` `viewnior/` | Notifications, bar, launcher, image viewer — waybar clicks: Wi-Fi → `impala` (floating kitty), volume → `wiremix` |
+| `mako/` `waybar/` `wofi/` `viewnior/` | Notifications, bar, launcher, image viewer — waybar clicks: Wi-Fi → `impala`, volume → `wiremix`, bluetooth → `bluetui`, bell → notification DND |
 | `nvim/` | LazyVim |
 | `gtk-2.0/` `gtk-3.0/` `QtProject.conf` | GTK/Qt theming |
 | `systemd/user/` | User units + `.wants` enable-symlinks (auto-enabled on restore) |
@@ -63,8 +63,12 @@ It's idempotent — safe to re-run.
 | `Alt+arrows` / `Alt+1..9` | focus window / workspace |
 | `Alt+Ctrl+num` / `Alt+scroll` | move window to workspace / cycle workspaces |
 | `Alt+L` | lock |
-| `Alt+S` / `Alt+N,B` | screenshot region / brightness |
+| `Alt+S` | screenshot region |
 | `Alt+D` / `Ctrl+Alt+D` | screen record region / full output (toggle → `~/Videos`) |
+| `Alt+N,B` / `XF86 brightness` | brightness −/+ (swayosd popup) |
+| `XF86 volume/mute` | volume, mute, mic mute (swayosd popup) |
+| `Alt+V` | clipboard history picker (cliphist + wofi) |
+| `Ctrl+Alt+N` | night light toggle (hyprsunset 4000K) |
 
 **herdr** (`Alt+Shift` namespace — no prefix, no clash with Hyprland's Alt):
 
@@ -161,3 +165,6 @@ Battery: `powerprofilesctl`, `sudo powertop`.
 | OS name 林ux, pretty hostname | `/etc/os-release`, `hostnamectl --pretty` | `distro-bootstrap` |
 | Nerd fonts (Maple Mono, CommitMono) | `~/.local/share/fonts/` | `distro-bootstrap` |
 | GTK font → CommitMono 11 | `gsettings` | `distro-bootstrap` |
+| pkglist auto-export hook | `/etc/pacman.d/hooks/pkglist-export.hook` | `distro-linx-polish` |
+| Plymouth 林 splash + initramfs hook | `/usr/share/plymouth/themes/linx/`, `/etc/mkinitcpio.conf` | `distro-linx-polish` |
+| GRUB `splash` flag + 林ux entries | `/etc/default/grub` → `grub-mkconfig` | `distro-linx-polish` |

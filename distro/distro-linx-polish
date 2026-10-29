@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# distro-linx-polish — system-level bits that need root:
+#   - pacman hook exporting pkglist.txt/pkglist-aur.txt on every transaction
+#   - plymouth 林 boot splash + mkinitcpio hook
+#   - GRUB: splash kernel flag + 林ux menu names
+# Run: sudo ~/.config/distro/distro-linx-polish
+set -euo pipefail
+repo="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+
+echo "==> pacman hook: auto-export pkglists"
+cat > /etc/pacman.d/hooks/pkglist-export.hook <<EOF
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Exporting pkglists to ~/.config
+When = PostTransaction
+Exec = $repo/distro/export-pkglists
+EOF
+
+if command -v plymouth-set-default-theme >/dev/null; then
+	echo "==> Plymouth 林 theme"
+	install -Dm644 "$repo/fastfetch/lin.png" /usr/share/plymouth/themes/linx/lin.png
+	cat > /usr/share/plymouth/themes/linx/linx.plymouth <<'EOF'
+[Plymouth Theme]
+Name=linx
+Description=Linux splash — static lin glyph
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/linx
+ScriptFile=/usr/share/plymouth/themes/linx/linx.script
+EOF
+	cat > /usr/share/plymouth/themes/linx/linx.script <<'EOF'
+img = Image("lin.png");
+spr = Sprite(img);
+spr.SetX(Window.GetWidth() / 2 - img.GetWidth() / 2);
+spr.SetY(Window.GetHeight() / 2 - img.GetHeight() / 2);
+fun refresh() { spr.SetOpacity(1); }
+Plymouth.SetRefreshFunction(refresh);
+EOF
+	grep -qE '^HOOKS=.*plymouth' /etc/mkinitcpio.conf || \
+		sed -i 's/^HOOKS=(\(.*\)systemd /HOOKS=(\1systemd plymouth /' /etc/mkinitcpio.conf
+	plymouth-set-default-theme linx
+	mkinitcpio -P
+fi
+
+if command -v grub-mkconfig >/dev/null && [ -d /boot/grub ]; then
+	echo "==> GRUB: splash flag + 林ux menu names"
+	grep -qw splash /etc/default/grub || \
+		sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 splash"/' /etc/default/grub
+	sed -i 's/^GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="林ux"/' /etc/default/grub
+	grub-mkconfig -o /boot/grub/grub.cfg
+fi
+
+echo "Done. Reboot for the splash; relog for autostart changes."

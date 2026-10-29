@@ -125,6 +125,10 @@ fi
 sudo hostnamectl set-hostname --pretty "林ux" 2>/dev/null || true
 gsettings set org.gnome.desktop.interface font-name 'CommitMono Nerd Font 11' 2>/dev/null || true
 
+# ── 10. pkglist pacman hook + plymouth splash + grub branding ───────
+info "Root polish (pacman hook, plymouth, grub)"
+sudo "$C/distro/distro-linx-polish" || echo "skip (non-fatal)"
+
 echo
 info "Bootstrap complete."
 cat <<'EOF'

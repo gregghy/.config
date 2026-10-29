@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Toggle mako do-not-disturb and refresh the waybar module (SIGRTMIN+8).
+makoctl mode -t do-not-disturb
+pkill -RTMIN+8 waybar
