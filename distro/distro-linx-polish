@@ -8,6 +8,7 @@ set -euo pipefail
 repo="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
 
 echo "==> pacman hook: auto-export pkglists"
+install -d /etc/pacman.d/hooks
 cat > /etc/pacman.d/hooks/pkglist-export.hook <<EOF
 [Trigger]
 Operation = Install
