@@ -27,7 +27,7 @@ new_cwd = "follow"
 prefix = "ctrl+space"
 
 # Meta
-reload_config = "alt+shift+q"
+reload_config = "alt+shift+ctrl+q"
 help = "alt+shift+/"
 detach = "alt+shift+d"
 copy_mode = "alt+shift+`"
@@ -40,7 +40,7 @@ focus_pane_right = "alt+shift+right"
 
 split_horizontal = "alt+enter"
 split_vertical = "alt+shift+enter"
-close_pane = ["alt+shift+x", "alt+esc"]
+close_pane = ["alt+shift+c", "alt+esc"]
 zoom = "alt+shift+z"
 last_pane = "alt+shift+;"
 cycle_pane_next = "alt+shift+tab"
@@ -55,7 +55,7 @@ resize_pane_right = "prefix+ctrl+right"
 
 # Tabs — num/c/p/n/r/k mirror hyprland's workspace binds
 switch_tab = ["alt+shift+1..9"]
-new_tab = "alt+shift+c"
+new_tab = "alt+shift+t"
 rename_tab = "alt+shift+r"
 close_tab = "alt+shift+k"
 previous_tab = "alt+shift+p"
@@ -68,8 +68,15 @@ switch_workspace = ["alt+shift+ctrl+1..9"]
 new_workspace = "alt+shift+ctrl+c"
 rename_workspace = "alt+shift+ctrl+r"
 close_workspace = "alt+shift+ctrl+k"
-previous_workspace = "alt+shift+ctrl+p"
-next_workspace = "alt+shift+ctrl+n"
+previous_workspace = "alt+shift+ctrl+w"
+next_workspace = "alt+shift+w"
+
+# Smart split — auto-picks direction like hyprland's dwindle does for new
+# windows (splits along the longer visual axis), via herdr/split-smart.py.
+[[keys.command]]
+key = "alt+shift+q"
+type = "shell"
+command = "/home/gregghy/.config/herdr/split-smart.py"
 
 # Swap pane positions — no built-in key action, bound via `herdr pane swap`.
 # ctrl = "move", same convention as hyprland's movewindow.

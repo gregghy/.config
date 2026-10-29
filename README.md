@@ -60,11 +60,12 @@ It's idempotent — safe to re-run.
 | Keys | Action |
 |---|---|
 | `Alt+Shift+arrows` | focus pane · `+Ctrl` swap pane · `prefix+Ctrl+arrows` resize |
-| `Alt+Enter` / `Alt+Shift+Enter` | split h / v · `Alt+Shift+X`/`Alt+Esc` close |
+| `Alt+Shift+Q` | smart split (auto direction, like dwindle) · `Alt+Enter`/`Alt+Shift+Enter` force h/v |
+| `Alt+Shift+C`/`Alt+Esc` | close pane · `Alt+Shift+Z` zoom · `Tab` cycle |
 | `Alt+Shift+1..9` / `P`/`N` / `[`/`]` | switch tab / cycle / move tab |
-| `Alt+Shift+C` `R` `K` / `Z` / `Tab` | new·rename·close tab / zoom / cycle pane |
-| `Alt+Shift+Ctrl+1..9` `C` `R` `K` `P` `N` | workspaces (Ctrl = bigger scope) |
-| `Alt+Shift+D` `Q` `/` `` ` `` | detach / reload / help / copy mode |
+| `Alt+Shift+T` `R` `K` | new / rename / close tab |
+| `Alt+Shift+W` (+`Ctrl`) / `Ctrl+1..9` `C` `R` `K` | workspace cycle / switch·new·rename·close |
+| `Alt+Shift+D` `Ctrl+Q` `/` `` ` `` | detach / reload / help / copy mode |
 
 `Ctrl+Space` remains the fallback prefix. Only `Alt+Shift+E` is taken (Hyprland → yazi).
 us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to herdr).

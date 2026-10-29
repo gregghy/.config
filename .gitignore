@@ -82,3 +82,4 @@ zoomus.conf
 chromium-headless/
 herdr/*
 !herdr/config.toml
+!herdr/split-smart.py
