@@ -48,6 +48,7 @@ It's idempotent — safe to re-run.
 |---|---|
 | `Alt+Q` / `Alt+F` | kitty / wofi launcher |
 | `Alt+H` | herdr (persistent terminal) |
+| `Alt+M` | nchat (telegram/signal/whatsapp TUI) |
 | `Alt+E` | yazi |
 | `Alt+T` | toggle waybar · `Alt+C` kill window |
 | `Alt+arrows` / `Alt+1..9` | focus window / workspace |
@@ -75,7 +76,7 @@ us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to 
 
 | 1 `term` | 2 `web` | 3 `herdr` | 4 `files` | 5 `chat` | 6 `notes` |
 |---|---|---|---|---|---|
-| kitty (default) | zen · firefox | `kitty --class herdr` | `kitty --class yazi` | telegram | obsidian |
+| kitty (default) | zen · firefox | `kitty --class herdr` | `kitty --class yazi` | telegram · `kitty --class nchat` | obsidian |
 
 Launching a routed app pulls you to its workspace. `Alt+H`/`Alt+E` launch
 with dedicated kitty `--class` so the rules can match them.
