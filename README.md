@@ -1,7 +1,9 @@
 # ~/.config
 
-Dotfiles for my Arch + Hyprland setup (Framework 13, AMD Ryzen 7040).
-Warm gruvbox palette everywhere: kitty, starship, yazi, eza, herdr, mako, GTK.
+Dotfiles for my Arch + Hyprland setup (Framework 13, AMD Ryzen 7040) — OS
+branded **林ux**. Warm gruvbox palette everywhere: kitty, starship, yazi,
+eza, herdr, mako, GTK. System font: CommitMono Nerd Font (fetched by
+bootstrap, not committed). Networking: iwd + impala (no NetworkManager).
 
 ## Install on a fresh Arch system
 
@@ -33,11 +35,11 @@ It's idempotent — safe to re-run.
 | Path | What |
 |---|---|
 | `hypr/` | Hyprland (`hyprland.lua` is the *active* config), hyprpaper, hyprlock, wallpapers |
-| `kitty/` `starship.toml` | Terminal + minimal gruvbox prompt |
+| `kitty/` `starship.toml` | Terminal (CommitMono Nerd Font) + minimal gruvbox prompt |
 | `eza/` | `theme.yml` (generated — do not edit), `generate-theme.py` |
 | `yazi/` | File manager + `gruvbox-dark` flavor |
 | `herdr/` | Persistent terminal workspaces config |
-| `mako/` `waybar/` `wofi/` `viewnior/` | Notifications, bar, launcher, image viewer |
+| `mako/` `waybar/` `wofi/` `viewnior/` | Notifications, bar, launcher, image viewer — waybar clicks: Wi-Fi → `impala` (floating kitty), volume → `wiremix` |
 | `nvim/` | LazyVim |
 | `gtk-2.0/` `gtk-3.0/` `QtProject.conf` | GTK/Qt theming |
 | `systemd/user/` | User units + `.wants` enable-symlinks (auto-enabled on restore) |
@@ -114,6 +116,9 @@ Battery: `powerprofilesctl`, `sudo powertop`.
   editor dirs are gitignored — check `git status` before `git add -A`.
 - **`hypr/hyprland.lua` is the live Hyprland config** — the old `.conf`
   was a dead duplicate and is gone.
+- **Networking is iwd**, not NetworkManager — use `impala`/`iwctl` to join
+  Wi-Fi. NM stays installed-but-disabled as rollback (`distro-bootstrap`
+  §9 reapplies the switch if needed).
 - Regenerate package lists after installing new things:
 
   ```sh
@@ -135,3 +140,9 @@ Battery: `powerprofilesctl`, `sudo powertop`.
 | Power profiles (auto power-saver on battery) | `power-profiles-daemon.service` | `distro-power-setup` |
 | Journal cap 500M | `/etc/systemd/journald.conf.d/50-maxsize.conf` | `distro-clean-root` |
 | Pacman cache `-k2` | `/etc/conf.d/pacman-contrib` | `distro-clean-root` |
+| iwd self-DHCP + resolved DNS | `/etc/iwd/main.conf` | `distro-bootstrap` |
+| Wired-ethernet DHCP | `/etc/systemd/network/20-wired.network` | `distro-bootstrap` |
+| iwd/resolved/networkd on, NM off; resolv.conf → resolved stub | systemctl + `/etc/resolv.conf` | `distro-bootstrap` |
+| OS name 林ux, pretty hostname | `/etc/os-release`, `hostnamectl --pretty` | `distro-bootstrap` |
+| Nerd fonts (Maple Mono, CommitMono) | `~/.local/share/fonts/` | `distro-bootstrap` |
+| GTK font → CommitMono 11 | `gsettings` | `distro-bootstrap` |
