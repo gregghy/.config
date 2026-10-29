@@ -151,7 +151,6 @@ hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("mpc toggle"))
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("mpc prev"))
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("mpc next"))
 hl.bind("XF86AudioStop", hl.dsp.exec_cmd("mpc stop"))
-hl.bind("ALT + SHIFT + V", hl.dsp.exec_cmd("cliphist list | wofi --dmenu | cliphist decode | wl-copy"))
 hl.bind("CTRL + ALT + N", hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight"))
 
 -- Switch workspaces with mainMod + [0-9]
