@@ -47,12 +47,12 @@ It's idempotent — safe to re-run.
 | Keys | Action |
 |---|---|
 | `Alt+Q` / `Alt+F` | kitty / wofi launcher |
-| `Alt+H` / `Alt+Ctrl+Return` | herdr (persistent terminal) |
+| `Alt+H` | herdr (persistent terminal) |
 | `Alt+E` / `Alt+Shift+E` | nemo / yazi |
 | `Alt+T` | toggle waybar · `Alt+C` kill window |
 | `Alt+arrows` / `Alt+1..9` | focus window / workspace |
 | `Alt+Ctrl+num` / `Alt+scroll` | move window to workspace / cycle workspaces |
-| `Alt+L` / `Alt+Ctrl+L` | lock / lock+suspend |
+| `Alt+L` | lock |
 | `Alt+S` / `Alt+N,B` | screenshot region / brightness |
 
 **herdr** (`Ctrl+Space` prefix — no clash with Alt):
