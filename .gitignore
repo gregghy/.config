@@ -70,7 +70,11 @@ gnuplot/
 ibus/
 menus/
 mpv/
-nchat/
+nchat/*
+!nchat/key.conf
+!nchat/ui.conf
+!nchat/color.conf
+!nchat/app.conf
 nemo/
 autostart/
 obs-studio/
