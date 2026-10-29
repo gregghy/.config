@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+# distro-bootstrap — one-shot setup for a fresh Arch install.
+#
+# Run on a base Arch system (after pacstrap/archinstall + user created):
+#   curl -fsSL https://raw.githubusercontent.com/gregghy/.config/main/distro/distro-bootstrap | bash
+# or, if the repo is already cloned to ~/.config:
+#   ~/.config/distro/distro-bootstrap
+#
+# What it does: clones ~/.config, installs all packages (official + AUR via
+# yay), links the distro scripts, restores .bashrc, installs herdr, enables
+# timers/services, applies system config (zram, power profiles, journal cap,
+# pacman cache policy).
+set -euo pipefail
+
+C="$HOME/.config"
+REPO_HTTPS="https://github.com/gregghy/.config"
+REPO_SSH="ssh://git@github.com/gregghy/.config"
+
+info() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+die()  { printf '\033[1;31merror:\033[0m %s\n' "$*" >&2; exit 1; }
+
+[ "$(id -u)" -eq 0 ] && die "run as your normal user, not root"
+sudo -v || die "sudo access required"
+
+# ── 1. dotfiles repo ────────────────────────────────────────────────
+if [ ! -d "$C/.git" ]; then
+    info "Installing git + cloning dotfiles to $C"
+    sudo pacman -S --needed --noconfirm git
+    git clone "$REPO_HTTPS" "$C" 2>/dev/null \
+        || git clone "$REPO_SSH" "$C" \
+        || die "clone failed (private repo? set up an SSH key first)"
+else
+    info "Dotfiles repo already present, pulling latest"
+    git -C "$C" pull --ff-only || true
+fi
+
+# ── 2. official packages ────────────────────────────────────────────
+info "Installing $(wc -l < "$C/pkglist.txt") official packages"
+sudo pacman -S --needed --noconfirm - < "$C/pkglist.txt"
+
+# ── 3. AUR via yay ──────────────────────────────────────────────────
+if ! command -v yay >/dev/null; then
+    info "Bootstrapping yay"
+    sudo pacman -S --needed --noconfirm base-devel
+    tmp=$(mktemp -d)
+    git clone https://aur.archlinux.org/yay-bin.git "$tmp/yay-bin"
+    (cd "$tmp/yay-bin" && makepkg -si --noconfirm)
+    rm -rf "$tmp"
+fi
+info "Installing $(wc -l < "$C/pkglist-aur.txt") AUR packages"
+yay -S --needed --noconfirm - < "$C/pkglist-aur.txt"
+
+# ── 4. scripts + bashrc ─────────────────────────────────────────────
+info "Linking distro scripts"
+mkdir -p "$HOME/.local/bin"
+for s in distro-clean distro-clean-root distro-power-setup; do
+    ln -sf "$C/distro/$s" "$HOME/.local/bin/$s"
+done
+sudo install -m755 "$C/distro/distro-clean-root" /usr/local/bin/distro-clean-root
+
+info "Restoring .bashrc (tracked copy, secrets stripped)"
+cp "$C/.bashrc_copy" "$HOME/.bashrc"
+
+# ── 5. herdr (binary, not a package) ────────────────────────────────
+if ! command -v herdr >/dev/null; then
+    info "Installing herdr"
+    curl -fL -o "$HOME/.local/bin/herdr" \
+        https://github.com/herdrdev/herdr/releases/latest/download/herdr-linux-x86_64
+    chmod +x "$HOME/.local/bin/herdr"
+fi
+
+# ── 6. user units + timers ──────────────────────────────────────────
+info "Enabling user services (tracked .wants symlinks)"
+systemctl --user daemon-reload
+systemctl --user enable --now distro-clean.timer ssh-agent.service 2>/dev/null || true
+
+# ── 7. system config ────────────────────────────────────────────────
+info "Applying system config (zram, power profiles, journal cap)"
+sudo "$C/distro/distro-power-setup"
+sudo "$C/distro/distro-clean-root"
+
+info "Enabling system timers"
+sudo systemctl enable --now paccache.timer reflector.timer 2>/dev/null || true
+
+echo
+info "Bootstrap complete."
+cat <<'EOF'
+
+Manual steps left:
+  - SSH keys:         copy ~/.ssh from backup, then `systemctl --user restart ssh-agent`
+  - gh auth:          `gh auth login`
+  - git identity:     git config --global user.name / user.email
+  - devin CLI:        official installer from devin.ai
+  - opencode:         installer (installs to ~/.opencode)
+  - flutter SDK:      ~/progetti/flutter-sdk (or clone it fresh + point PATH in .bashrc)
+  - passwords/tokens: re-add secret aliases (e.g. trr) — never committed
+EOF

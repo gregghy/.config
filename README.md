@@ -52,25 +52,30 @@ Scripts live here as the canonical copy, symlinked into `~/.local/bin`:
 | Journal capped at 500M | `/etc/systemd/journald.conf.d/50-maxsize.conf` | `distro-clean-root` |
 | Pacman cache keeps 2 versions | `PACCACHE_ARGS=-k2` in `/etc/conf.d/pacman-contrib` | `distro-clean-root` |
 
-## Fresh Arch install — restore steps
+## Fresh Arch install — one-command bootstrap
+
+On a base Arch system (after pacstrap/archinstall + your user exists):
 
 ```sh
-# 1. clone this repo to ~/.config, then symlink the scripts
-for s in distro-clean distro-clean-root distro-power-setup; do
-    ln -sf ~/.config/distro/$s ~/.local/bin/$s
-done
-
-# 2. (optional) put the root script in sudo's path
-sudo install -m755 ~/.config/distro/distro-clean-root /usr/local/bin/
-
-# 3. enable the weekly cleanup timer
-systemctl --user daemon-reload
-systemctl --user enable --now distro-clean.timer
-
-# 4. apply system-level setup
-sudo ~/.config/distro/distro-power-setup
-sudo ~/.config/distro/distro-clean-root
+curl -fsSL https://raw.githubusercontent.com/gregghy/.config/main/distro/distro-bootstrap | bash
 ```
+
+`distro/distro-bootstrap` does everything: clones this repo, installs all
+packages (`pkglist.txt` official + `pkglist-aur.txt` via yay, bootstrapping
+yay itself if needed), links the `distro-*` scripts, restores `.bashrc`,
+installs the herdr binary, enables user units/timers, applies system config
+(zram, power-profiles-daemon, journald cap, paccache policy), and enables
+`paccache`/`reflector` system timers.
+
+Package lists are snapshots — regenerate after installing new things:
+
+```sh
+pacman -Qneq > ~/.config/pkglist.txt
+pacman -Qmq | grep -vE '^(yay|yay-bin|yay-bin-debug)$' > ~/.config/pkglist-aur.txt
+```
+
+Not covered (manual, see bootstrap's final notes): SSH keys, `gh auth login`,
+git identity, devin/opencode CLIs, flutter SDK, secret aliases.
 
 ## Maintenance routine
 
