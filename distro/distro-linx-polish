@@ -28,11 +28,11 @@ EOF
 
 if command -v plymouth-set-default-theme >/dev/null; then
 	echo "==> Plymouth 林 theme"
-	install -Dm644 "$repo/fastfetch/lin.png" /usr/share/plymouth/themes/linx/lin.png
+	install -Dm644 "$repo/fastfetch/lin-splash.png" /usr/share/plymouth/themes/linx/lin-splash.png
 	cat > /usr/share/plymouth/themes/linx/linx.plymouth <<'EOF'
 [Plymouth Theme]
 Name=linx
-Description=Linux splash — static lin glyph
+Description=Linux splash — ASCII lin art, breathing
 ModuleName=script
 
 [script]
@@ -40,11 +40,27 @@ ImageDir=/usr/share/plymouth/themes/linx
 ScriptFile=/usr/share/plymouth/themes/linx/linx.script
 EOF
 	cat > /usr/share/plymouth/themes/linx/linx.script <<'EOF'
-img = Image("lin.png");
-spr = Sprite(img);
-spr.SetX(Window.GetWidth() / 2 - img.GetWidth() / 2);
-spr.SetY(Window.GetHeight() / 2 - img.GetHeight() / 2);
-fun refresh() { spr.SetOpacity(1); }
+# gruvbox dark backdrop
+Window.SetBackgroundTopColor(0.114, 0.125, 0.129);
+Window.SetBackgroundBottomColor(0.098, 0.098, 0.098);
+
+art.image = Image("lin-splash.png");
+# fit to ~52% of screen height, never wider than 80% of screen
+scale = Window.GetHeight() * 0.52 / art.image.GetHeight();
+if (art.image.GetWidth() * scale > Window.GetWidth() * 0.8)
+  scale = Window.GetWidth() * 0.8 / art.image.GetWidth();
+art.scaled = art.image.Scale(art.image.GetWidth() * scale,
+                             art.image.GetHeight() * scale);
+art.sprite = Sprite(art.scaled);
+art.sprite.SetX(Window.GetWidth()  / 2 - art.scaled.GetWidth()  / 2);
+art.sprite.SetY(Window.GetHeight() / 2 - art.scaled.GetHeight() / 2);
+art.angle = 0;
+
+fun refresh()
+  {
+    art.angle += 0.07;
+    art.sprite.SetOpacity(0.62 + 0.38 * (Math.Cos(art.angle) + 1) / 2);
+  }
 Plymouth.SetRefreshFunction(refresh);
 EOF
 	grep -qE '^HOOKS=.*plymouth' /etc/mkinitcpio.conf || \
