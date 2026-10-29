@@ -4,6 +4,11 @@ tinted with the gruvbox-dark flavor's filetype colors."""
 import tomllib
 
 ICON_TOML = "/tmp/yazi-dark.toml"
+ICON_URL = "https://raw.githubusercontent.com/sxyazi/yazi/main/yazi-config/preset/theme-dark.toml"
+
+import os, urllib.request
+if not os.path.exists(ICON_TOML):
+    urllib.request.urlretrieve(ICON_URL, ICON_TOML)
 OUT = "/home/gregghy/.config/eza/theme.yml"
 
 # gruvbox mime-group colors (from yazi flavor.toml [filetype] rules)
