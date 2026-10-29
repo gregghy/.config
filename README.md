@@ -55,10 +55,18 @@ It's idempotent — safe to re-run.
 | `Alt+L` | lock |
 | `Alt+S` / `Alt+N,B` | screenshot region / brightness |
 
-**herdr** (`Ctrl+Space` prefix — no clash with Alt):
-`Alt+Enter`/`Alt+Shift+Enter` splits · `Ctrl+Alt+arrows` pane focus ·
-`prefix+1..9` tabs · `prefix+x`/`Alt+Esc` close pane · `prefix+d` detach ·
-`prefix+?` full keymap
+**herdr** (`Alt+Shift` namespace — no prefix, no clash with Hyprland's Alt):
+
+| Keys | Action |
+|---|---|
+| `Alt+Shift+arrows` | focus pane · `+Ctrl` swap pane · `prefix+Ctrl+arrows` resize |
+| `Alt+Enter` / `Alt+Shift+Enter` | split h / v · `Alt+Shift+X`/`Alt+Esc` close |
+| `Alt+Shift+1..9` / `P`/`N` / `[`/`]` | switch tab / cycle / move tab |
+| `Alt+Shift+C` `R` `K` / `Z` / `Tab` | new·rename·close tab / zoom / cycle pane |
+| `Alt+Shift+Ctrl+1..9` `C` `R` `K` `P` `N` | workspaces (Ctrl = bigger scope) |
+| `Alt+Shift+D` `Q` `/` `` ` `` | detach / reload / help / copy mode |
+
+`Ctrl+Space` remains the fallback prefix. Only `Alt+Shift+E` is taken (Hyprland → yazi).
 
 **Shell** (bash): `ls`/`ll`/`lt` → eza with yazi's icons+colors ·
 `cat` → bat (gruvbox-dark) · `Ctrl+R`/`Ctrl+T` fzf · `z <dir>` zoxide ·

@@ -1,11 +1,9 @@
 onboarding = false
 # Omarchy-style herdr config, adapted to this desktop's keymap.
-# Hyprland owns Alt ($mainMod), so alt+ combos that collide with hyprland
-# binds were dropped or moved to the Ctrl+Space prefix / Ctrl+Alt space:
-#   hyprland Alt+arrows  (movefocus) -> herdr Ctrl+Alt+arrows (focus pane)
-#   hyprland Alt+1..9    (workspace) -> herdr prefix+1..9     (switch tab)
-#   hyprland Alt+Up/Down (movefocus) -> herdr prefix+shift+p/n (workspaces)
-# Surviving alt keys (alt+enter, alt+esc, alt+shift+arrows) are free in hyprland.
+# Modifier split: Alt = hyprland, Alt+Shift = herdr (no prefix needed).
+# Only alt+shift+e is off-limits — hyprland owns it (-> kitty -e yazi).
+# Mirrors hyprland's shapes: +arrows focus, +ctrl adds "move",
+# +num switches tabs, +ctrl+num switches workspaces.
 
 [theme]
 # gruvbox = warm/brown palette (matches yazi + wallpapers)
@@ -25,76 +23,73 @@ surface_dim = "black"
 new_cwd = "follow"
 
 [keys]
+# Kept for rare unbound actions; everyday use is all direct alt+shift chords.
 prefix = "ctrl+space"
 
-# Config and help
-reload_config = "prefix+q"
-help = "prefix+?"
-detach = "prefix+d"
+# Meta
+reload_config = "alt+shift+q"
+help = "alt+shift+/"
+detach = "alt+shift+d"
+copy_mode = "alt+shift+`"
 
-# Copy mode
-copy_mode = "prefix+["
+# Panes — focus mirrors hyprland's Alt+arrows
+focus_pane_left = "alt+shift+left"
+focus_pane_down = "alt+shift+down"
+focus_pane_up = "alt+shift+up"
+focus_pane_right = "alt+shift+right"
 
-# Panes
-split_horizontal = ["prefix+h", "alt+enter"]
-split_vertical = ["prefix+v", "alt+shift+enter"]
-close_pane = ["prefix+x", "alt+esc"]
-zoom = "prefix+z"
-last_pane = "prefix+;"
+split_horizontal = "alt+enter"
+split_vertical = "alt+shift+enter"
+close_pane = ["alt+shift+x", "alt+esc"]
+zoom = "alt+shift+z"
+last_pane = "alt+shift+;"
+cycle_pane_next = "alt+shift+tab"
+cycle_pane_previous = "alt+shift+ctrl+tab"
+rename_pane = "alt+shift+o"
 
-# Focus mirrors hyprland's movefocus shape: modifier+arrows, shifted to Ctrl+Alt
-focus_pane_left = "ctrl+alt+left"
-focus_pane_down = "ctrl+alt+down"
-focus_pane_up = "ctrl+alt+up"
-focus_pane_right = "ctrl+alt+right"
+# Resize lives on the prefix (rare op) — alt+shift+ctrl+arrows is taken by pane swap
+resize_pane_left = "prefix+ctrl+left"
+resize_pane_down = "prefix+ctrl+down"
+resize_pane_up = "prefix+ctrl+up"
+resize_pane_right = "prefix+ctrl+right"
 
-resize_mode = ["prefix+ctrl+left", "prefix+ctrl+down", "prefix+ctrl+up", "prefix+ctrl+right"]
+# Tabs — num/c/p/n/r/k mirror hyprland's workspace binds
+switch_tab = ["alt+shift+1..9"]
+new_tab = "alt+shift+c"
+rename_tab = "alt+shift+r"
+close_tab = "alt+shift+k"
+previous_tab = "alt+shift+p"
+next_tab = "alt+shift+n"
+move_tab_previous = "alt+shift+["
+move_tab_next = "alt+shift+]"
 
-resize_pane_left = "ctrl+alt+shift+left"
-resize_pane_down = "ctrl+alt+shift+down"
-resize_pane_up = "ctrl+alt+shift+up"
-resize_pane_right = "ctrl+alt+shift+right"
-
-rename_pane = "prefix+shift+o"
-
-# Windows -> tabs
-new_tab = "prefix+c"
-rename_tab = "prefix+r"
-close_tab = "prefix+k"
-switch_tab = ["prefix+1..9"]
-previous_tab = "prefix+p"
-next_tab = "prefix+n"
-
-# Move tabs with alt+shift+arrows (free in hyprland)
-move_tab_previous = "alt+shift+left"
-move_tab_next = "alt+shift+right"
-
-# Sessions -> workspaces
-new_workspace = "prefix+shift+c"
-rename_workspace = "prefix+shift+r"
-close_workspace = "prefix+shift+k"
-previous_workspace = "prefix+shift+p"
-next_workspace = "prefix+shift+n"
+# Workspaces — ctrl = "scope above tabs"
+switch_workspace = ["alt+shift+ctrl+1..9"]
+new_workspace = "alt+shift+ctrl+c"
+rename_workspace = "alt+shift+ctrl+r"
+close_workspace = "alt+shift+ctrl+k"
+previous_workspace = "alt+shift+ctrl+p"
+next_workspace = "alt+shift+ctrl+n"
 
 # Swap pane positions — no built-in key action, bound via `herdr pane swap`.
-# "shift = move", same convention as move_tab's alt+shift+arrows.
+# ctrl = "move", same convention as hyprland's movewindow.
 [[keys.command]]
-key = "prefix+shift+left"
+key = "alt+shift+ctrl+left"
 type = "shell"
 command = "/home/gregghy/.local/bin/herdr pane swap --direction left --current"
 
 [[keys.command]]
-key = "prefix+shift+right"
+key = "alt+shift+ctrl+right"
 type = "shell"
 command = "/home/gregghy/.local/bin/herdr pane swap --direction right --current"
 
 [[keys.command]]
-key = "prefix+shift+up"
+key = "alt+shift+ctrl+up"
 type = "shell"
 command = "/home/gregghy/.local/bin/herdr pane swap --direction up --current"
 
 [[keys.command]]
-key = "prefix+shift+down"
+key = "alt+shift+ctrl+down"
 type = "shell"
 command = "/home/gregghy/.local/bin/herdr pane swap --direction down --current"
 
