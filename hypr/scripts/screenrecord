@@ -17,10 +17,10 @@ file="$VIDEOS/screenrecording-$(date +%F_%H-%M-%S).mp4"
 rec() {
 	if command -v wl-screenrec >/dev/null; then
 		wl-screenrec -f "$file" --audio --framerate 60 \
-			--ffmpeg-encoder-options="-c:v libx264 -crf 23 -preset medium -movflags +faststart" "$@"
+			--ffmpeg-encoder-options="-c:v libx264 -crf 23 -preset medium -level 5.1 -movflags +faststart" "$@"
 	else
 		wf-recorder -f "$file" -a -r 60 \
-			-c libx264 -p crf=23 -p preset=medium -p movflags=+faststart "$@"
+			-c libx264 -p crf=23 -p preset=medium -p level=5.1 -p movflags=+faststart "$@"
 	fi
 }
 
