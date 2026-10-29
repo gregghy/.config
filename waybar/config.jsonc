@@ -2,7 +2,7 @@
 	"layer": "top",
 	"position": "top",
 	"modules-left": ["clock", "network"],
-	"modules-center": ["custom/workspace"],
+	"modules-center": ["hyprland/workspaces"],
 	"modules-right": ["cpu", "memory", "temperature", "battery", "pulseaudio"],
 
 	"memory": {
@@ -60,9 +60,8 @@
         	"format-disconnected": "Disconnected ⚠",
         	"format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
     	},
-	"custom/workspace": {
-		"exec": "~/.config/waybar/scripts/current-workspace.sh",
-		"format": "{}"
+	"hyprland/workspaces": {
+		"format": "{id}"
 	}
 }
 

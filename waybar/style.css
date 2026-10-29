@@ -20,9 +20,24 @@ tooltip {
     border-color: #11111b;
 }
 
-#custom-workspace {
-    color: #83a598;
+#workspaces {
     border-radius: 10px;
+}
+
+#workspaces button {
+    color: #665c54;
+    padding: 0px 6px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+#workspaces button.active {
+    color: #83a598;
+}
+
+#workspaces button.urgent {
+    color: #fb4934;
 }
 
 #custom-power_profile,
@@ -36,7 +51,7 @@ tooltip {
 #gpu,
 #cpu,
 #memory,
-#custom-workspace,
+#workspaces,
 #tray,
 #backlight {
     background: #1e1e2e;
