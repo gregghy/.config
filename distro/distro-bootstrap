@@ -61,13 +61,16 @@ sudo install -m755 "$C/distro/distro-clean-root" /usr/local/bin/distro-clean-roo
 info "Restoring .bashrc (tracked copy, secrets stripped)"
 cp "$C/.bashrc_copy" "$HOME/.bashrc"
 
-# ── 5. herdr (binary, not a package) ────────────────────────────────
+# ── 5. herdr (binary, not a package) + devin orchestration skill ────
 if ! command -v herdr >/dev/null; then
     info "Installing herdr"
     curl -fL -o "$HOME/.local/bin/herdr" \
         https://github.com/herdrdev/herdr/releases/latest/download/herdr-linux-x86_64
     chmod +x "$HOME/.local/bin/herdr"
 fi
+mkdir -p "$HOME/.config/devin/skills/herdr"
+curl -fsSL -o "$HOME/.config/devin/skills/herdr/SKILL.md" \
+    https://raw.githubusercontent.com/herdrdev/herdr/master/skills/herdr/SKILL.md
 
 # ── 6. user units + timers ──────────────────────────────────────────
 info "Enabling user services (tracked .wants symlinks)"
