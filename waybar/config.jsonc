@@ -4,75 +4,70 @@
 	"modules-left": ["clock", "network"],
 	"modules-center": ["hyprland/workspaces", "hyprland/window"],
 	"modules-right": ["cpu", "memory", "temperature", "battery", "pulseaudio"],
-
-
+	
+	
 	"hyprland/window": {
 		"max-length": 30
   },
 
-	"hyprland/workspaces": {
-		"active-only": true,
-		"format": "{icon} {name}",
-		"format-icons": {
-			"term": "",
-			"web": "",
-			"herdr": "",
-			"files": "",
-			"chat": "",
-			"notes": "",
-			"default": ""
-		}
-	},
-
 	"memory": {
     "interval": 30,
-    "format": "{}%"
+    "format": "{}%"
   },
 
 	"battery": {
 		"format": "{capacity}%{icon}",
-		"format-icons": ["", "", "", "", ""]
+		"format-icons": ["", "", "", "", ""]
 	},
 
   "clock": {
-    "format": " {:%H:%M   %a %e %b}",
+    "format": " {:%H:%M   %a %e %b}",
 		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
   },
 
 	"pulseaudio": {
         	"format": "{icon} {volume}%",
         	"tooltip": false,
-        	"format-muted": " Muted",
+        	"format-muted": " Muted",
         	"on-click": "pamixer -t",
         	"on-scroll-up": "pamixer -i 5",
         	"on-scroll-down": "pamixer -d 5",
         	"scroll-step": 5,
         	"format-icons": {
-        		"headphone": "",
-        		"hands-free": "",
-        		"headset": "",
-        		"phone": "",
-        		"portable": "",
-        		"car": "",
-        		"default": ["", ""]
+            		"headphone": "",
+            		"hands-free": "",
+            		"headset": "",
+            		"phone": "",
+            		"portable": "",
+            		"car": "",
+            		"default": ["", "", ""]
         	}
-        },
+  },
 
 	"temperature": {
-        	"format": "{temperatureC}°C",
-        	"format-critical": "{temperatureC}°C"
-        },
+        	"thermal-zone": 1,
+        	"format": "{temperatureC}°C",
+        	"critical-threshold": 70,
+        	"format-critical": "{temperatureC}°C"
+  },
 
-	"cpu": {
-        	"format": "{}%"
-        },
+  "cpu": {
+		"interval": 10,
+		"format": "{}%"
+  },
 
 	"network": {
-        	"format-wifi": " {signalStrength}%",
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        	"format-wifi": " {signalStrength}%",
         	"format-ethernet": "{ipaddr}/{cidr}",
         	"tooltip-format": "{essid} - {ifname} via {gwaddr}",
         	"format-linked": "{ifname} (No IP)",
         	"format-disconnected": "Disconnected ⚠",
         	"format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
-        }
+    	},
+	"hyprland/workspaces": {
+		"active-only": true,
+		"format": "{id}"
+	}
 }
+

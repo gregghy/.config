@@ -22,6 +22,7 @@ tooltip {
 
 #workspaces button {
     padding: 0px 8px;
+    min-width: 24px;
     color: #665c54;
     margin-right: 5px;
 }
@@ -108,6 +109,7 @@ tooltip {
     background: #1d2021;
     color: #f2c993;
     border-radius: 10px;
+    min-width: 480px;
 }
 
 #clock {
