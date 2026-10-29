@@ -59,15 +59,16 @@ It's idempotent — safe to re-run.
 
 | Keys | Action |
 |---|---|
-| `Alt+Shift+arrows` | focus pane · `+Ctrl` swap pane · `prefix+Ctrl+arrows` resize |
-| `Alt+Shift+Q` | smart split (auto direction, like dwindle) · `Alt+Enter`/`Alt+Shift+Enter` force h/v |
+| `Alt+Shift+arrows` | focus pane · `Ctrl+Alt+Shift+arrows` resize |
+| `Alt+Shift+Q` / `Alt+Enter` | split h · `Alt+Shift+Enter` split v |
 | `Alt+Shift+C`/`Alt+Esc` | close pane · `Alt+Shift+Z` zoom · `Tab` cycle |
-| `Alt+Shift+1..9` / `P`/`N` / `[`/`]` | switch tab / cycle / move tab |
-| `Alt+Shift+T` `R` `K` | new / rename / close tab |
-| `Alt+Shift+W` (+`Ctrl`) / `Ctrl+1..9` `C` `R` `K` | workspace cycle / switch·new·rename·close |
+| `Alt+Shift+N`/`T` / `1..9` / `[`/`]` | new tab / switch / move tab |
+| `Alt+Shift+R` `K` / `Ctrl+P`/`N` | rename·close tab / cycle tabs |
+| `Alt+Shift+M` `W` / `Ctrl+W` `1..9` `R` `K` | new·cycle workspace / back·switch·rename·close |
 | `Alt+Shift+D` `Ctrl+Q` `/` `` ` `` | detach / reload / help / copy mode |
+| `Ctrl+Space`+`q` / `Shift+arrows` | smart split (auto dir) / swap pane — commands need prefix (0.9.5) |
 
-`Ctrl+Space` remains the fallback prefix. Only `Alt+Shift+E` is taken (Hyprland → yazi).
+Only `Alt+Shift+E` is taken (Hyprland → yazi).
 us/it layout toggle is `Super+Space` (was `Alt+Shift` — that space belongs to herdr).
 
 **Shell** (bash): `ls`/`ll`/`lt` → eza with yazi's icons+colors ·
