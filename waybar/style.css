@@ -20,34 +20,9 @@ tooltip {
     border-color: #11111b;
 }
 
-#workspaces button {
-    color: transparent;
-    background: transparent;
-    min-width: 0;
-    padding: 0;
-    margin: 0;
-    box-shadow: none;
-    border: none;
-}
-
-#workspaces button.active {
+#custom-workspace {
     color: #83a598;
-    background: transparent;
-    min-width: 0;
-    padding: 0;
-    margin: 0;
-}
-
-#workspaces button.urgent {
-    color: #1d2021;
-    background: #fb4934;
-    border-radius: 10px;
-}
-
-#workspaces button:hover {
-    background: #11111b;
-    color: #cdd6f4;
-    border-radius: 10px;
+    margin-right: 8px;
 }
 
 #custom-power_profile,
@@ -99,7 +74,6 @@ tooltip {
     background: transparent;
     color: #83a598;
     border: none;
-    margin-right: 8px;
     padding: 0;
 }
 
