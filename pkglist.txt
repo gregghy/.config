@@ -68,8 +68,8 @@ nmap
 noto-fonts-cjk
 noto-fonts-emoji
 npm
-obsidian
 obs-studio
+obsidian
 ocaml
 openal
 openconnect
@@ -109,7 +109,6 @@ swappy
 swaybg
 swayosd
 tailscale
-telegram-desktop
 timidity++
 tmux
 tor

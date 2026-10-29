@@ -207,7 +207,6 @@ route("zen", 2)
 route("firefox", 2)
 route("herdr", 3)
 route("yazi", 4)
-route("(TelegramDesktop|org\\.telegram\\.desktop|telegram-desktop)", 5)
 route("nchat", 5)
 route("obsidian", 6)
 
