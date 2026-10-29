@@ -1,0 +1,25 @@
+[opener]
+zen = [
+  { run = 'zen-browser %S', desc = "Zen Browser", orphan = true, for = "unix" },
+]
+system = [
+  { run = 'xdg-open %s', desc = "System default app", orphan = true, for = "unix" },
+]
+play = [
+  { run = 'mpv %s', desc = "Play in mpv", orphan = true, for = "unix" },
+]
+viewnior = [
+  { run = 'viewnior %s', desc = "View in viewnior", orphan = true, for = "unix" },
+]
+edit = [
+  { run = 'nvim %s', desc = "Edit in nvim", block = true, for = "unix" },
+]
+
+[open]
+rules = [
+  { mime = "image/*", use = [ "zen", "viewnior", "system" ] },
+  { mime = "video/*", use = [ "zen", "play", "system" ] },
+  { mime = "audio/*", use = [ "zen", "play", "system" ] },
+  { mime = "text/*", use = [ "zen", "edit", "system" ] },
+  { mime = "*", use = [ "zen", "system" ] },
+]
