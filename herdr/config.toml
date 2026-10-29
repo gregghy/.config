@@ -38,7 +38,7 @@ focus_pane_down = "alt+shift+down"
 focus_pane_up = "alt+shift+up"
 focus_pane_right = "alt+shift+right"
 
-split_horizontal = "alt+enter"
+split_horizontal = "alt+shift+ctrl+enter"
 split_vertical = "alt+shift+q"
 close_pane = ["alt+shift+c", "alt+esc"]
 zoom = "alt+shift+z"
