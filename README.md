@@ -1,86 +1,109 @@
 # ~/.config
 
-Dotfiles repo for my Arch + Hyprland setup (Framework 13, AMD Ryzen 7040).
+Dotfiles for my Arch + Hyprland setup (Framework 13, AMD Ryzen 7040).
+Warm gruvbox palette everywhere: kitty, starship, yazi, eza, herdr, mako, GTK.
 
-Only curated config is tracked — app dirs holding secrets or disposable
-state are `.gitignore`d. Before `git add -A`, always check `git status`
-first; token-bearing dirs (`gh/`, `.wrangler/`, `devin/`, `opencode/`,
-editor config) must never be committed.
+## Install on a fresh Arch system
 
-Some tracked configs belong to apps not currently installed — they are
-kept on purpose so a reinstall gets old settings back.
-
-## Layout
-
-| Path | Purpose |
-|---|---|
-| `hypr/` | Hyprland, hyprpaper, hyprlock + wallpapers |
-| `kitty/`, `starship.toml` | Terminal + prompt |
-| `nvim/` | Neovim (LazyVim) |
-| `waybar/`, `wofi/` | Bar + launcher |
-| `systemd/user/` | User units: ssh-agent, tunnels, timers (see below) |
-| `distro/` | System maintenance toolkit (see below) |
-| `gtk-3.0/`, `gtk-4.0/` | GTK theming |
-| `mimeapps.list`, `user-dirs.*` | XDG defaults |
-
-## distro/ — maintenance toolkit
-
-Scripts live here as the canonical copy, symlinked into `~/.local/bin`:
-
-| Script | Run as | What it does |
-|---|---|---|
-| `distro-clean` | user | Clears user caches (yay AUR builds, pip, npm, pre-commit) and prints a status report: disk / journal / orphan packages / coredumps |
-| `distro-clean-root` | sudo | Removes orphan packages, prunes pacman cache to last 2 versions, vacuums the journal, clears coredumps, enables `loginctl` linger |
-| `distro-power-setup` | sudo | One-time setup: zram swap + `power-profiles-daemon` (see system changes below) |
-
-### Automation
-
-- `systemd/user/distro-clean.timer` — runs `distro-clean` **weekly**
-  (`OnCalendar=weekly`, `Persistent=true`). Enabled via
-  `timers.target.wants/`, so it survives a reinstall automatically.
-- Check runs: `journalctl --user -u distro-clean`
-- System timers already present on Arch: `paccache` (weekly pacman
-  cache prune), `reflector` (mirror refresh), `systemd-tmpfiles-clean`.
-
-### System-level changes the scripts make
-
-| Change | File / mechanism | Set by |
-|---|---|---|
-| zram swap = RAM/2, zstd | `/etc/systemd/zram-generator.conf` | `distro-power-setup` |
-| `vm.swappiness=180` | `/etc/sysctl.d/99-zram-swappiness.conf` | `distro-power-setup` |
-| Auto power-saver on battery | `power-profiles-daemon.service` | `distro-power-setup` |
-| Journal capped at 500M | `/etc/systemd/journald.conf.d/50-maxsize.conf` | `distro-clean-root` |
-| Pacman cache keeps 2 versions | `PACCACHE_ARGS=-k2` in `/etc/conf.d/pacman-contrib` | `distro-clean-root` |
-
-## Fresh Arch install — one-command bootstrap
-
-On a base Arch system (after pacstrap/archinstall + your user exists):
+After a base install (pacstrap/archinstall + user created), one line:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/gregghy/.config/main/distro/distro-bootstrap | bash
 ```
 
-`distro/distro-bootstrap` does everything: clones this repo, installs all
-packages (`pkglist.txt` official + `pkglist-aur.txt` via yay, bootstrapping
-yay itself if needed), links the `distro-*` scripts, restores `.bashrc`,
-installs the herdr binary, enables user units/timers, applies system config
-(zram, power-profiles-daemon, journald cap, paccache policy), and enables
-`paccache`/`reflector` system timers.
+`distro/distro-bootstrap` self-clones this repo, installs all packages,
+restores configs and scripts, enables timers, applies system config.
+It's idempotent — safe to re-run.
 
-Package lists are snapshots — regenerate after installing new things:
+**Manual leftovers** (by design, nothing secret is in git):
 
-```sh
-pacman -Qneq > ~/.config/pkglist.txt
-pacman -Qmq | grep -vE '^(yay|yay-bin|yay-bin-debug)$' > ~/.config/pkglist-aur.txt
-```
+- `~/.ssh` keys → `systemctl --user restart ssh-agent`
+- `gh auth login` + `git config --global user.name/user.email`
+- devin CLI, opencode (own installers), flutter SDK → `~/progetti/flutter-sdk`
+- secret aliases (e.g. `trr` Transmission password) — re-add to `~/.bashrc`
 
-Not covered (manual, see bootstrap's final notes): SSH keys, `gh auth login`,
-git identity, devin/opencode CLIs, flutter SDK, secret aliases.
+## What's inside
 
-## Maintenance routine
+| Path | What |
+|---|---|
+| `hypr/` | Hyprland (`hyprland.lua` is the *active* config), hyprpaper, hyprlock, wallpapers |
+| `kitty/` `starship.toml` | Terminal + minimal gruvbox prompt |
+| `eza/` | `theme.yml` (generated — do not edit), `generate-theme.py` |
+| `yazi/` | File manager + `gruvbox-dark` flavor |
+| `herdr/` | Persistent terminal workspaces config |
+| `mako/` `waybar/` `wofi/` `viewnior/` | Notifications, bar, launcher, image viewer |
+| `nvim/` | LazyVim |
+| `gtk-2.0/` `gtk-3.0/` `QtProject.conf` | GTK/Qt theming |
+| `systemd/user/` | User units + `.wants` enable-symlinks (auto-enabled on restore) |
+| `distro/` | Maintenance + bootstrap scripts |
+| `pkglist.txt` `pkglist-aur.txt` | Package snapshots (127 official + 34 AUR) |
+| `.bashrc_copy` | Tracked `~/.bashrc` copy — secrets stripped |
+| `environment.d/` `mimeapps.list` `user-dirs.*` `dconf/` `pavucontrol.ini` `pulse/` | XDG/desktop defaults |
 
-- **Automatic:** weekly `distro-clean` timer, `paccache` (2 versions),
-  `reflector`, tmpfiles cleaning, journald 500M cap.
-- **When `distro-clean` reports orphans:** `sudo distro-clean-root`
-- **Battery:** `powerprofilesctl` shows the active profile;
-  `sudo powertop` for drain analysis.
+## Daily use
+
+**Hyprland** (`mainMod = Alt`):
+
+| Keys | Action |
+|---|---|
+| `Alt+Q` / `Alt+F` | kitty / wofi launcher |
+| `Alt+H` / `Alt+Ctrl+Return` | herdr (persistent terminal) |
+| `Alt+E` / `Alt+Shift+E` | nemo / yazi |
+| `Alt+T` | toggle waybar · `Alt+C` kill window |
+| `Alt+arrows` / `Alt+1..9` | focus window / workspace |
+| `Alt+Ctrl+num` / `Alt+scroll` | move window to workspace / cycle workspaces |
+| `Alt+L` / `Alt+Ctrl+L` | lock / lock+suspend |
+| `Alt+S` / `Alt+N,B` | screenshot region / brightness |
+
+**herdr** (`Ctrl+Space` prefix — no clash with Alt):
+`Alt+Enter`/`Alt+Shift+Enter` splits · `Ctrl+Alt+arrows` pane focus ·
+`prefix+1..9` tabs · `prefix+x`/`Alt+Esc` close pane · `prefix+d` detach ·
+`prefix+?` full keymap
+
+**Shell** (bash): `ls`/`ll`/`lt` → eza with yazi's icons+colors ·
+`cat` → bat (gruvbox-dark) · `Ctrl+R`/`Ctrl+T` fzf · `z <dir>` zoxide ·
+`❯` turns red on failed commands
+
+## Maintenance
+
+Scripts in `distro/` are the canonical copies, symlinked to `~/.local/bin`
+(+ `distro-clean-root` in `/usr/local/bin` for sudo):
+
+| Script | What |
+|---|---|
+| `distro-bootstrap` | Fresh-install setup (above) |
+| `distro-clean` | User caches + status report — **runs weekly** via user timer |
+| `sudo distro-clean-root` | Orphans, pacman cache→2 versions, journal vacuum, coredumps |
+| `sudo distro-power-setup` | zram + power-profiles-daemon (idempotent) |
+
+Automatic: weekly `distro-clean` timer, `paccache` (`-k2`), `reflector`,
+tmpfiles, journald 500M cap. Check runs: `journalctl --user -u distro-clean`.
+Battery: `powerprofilesctl`, `sudo powertop`.
+
+## House rules
+
+- **Nothing secret in git.** `gh/`, `.wrangler/`, `devin/`, `opencode/`,
+  editor dirs are gitignored — check `git status` before `git add -A`.
+- **`hypr/hyprland.lua` is the live Hyprland config** — the old `.conf`
+  was a dead duplicate and is gone.
+- Regenerate package lists after installing new things:
+
+  ```sh
+  pacman -Qneq > ~/.config/pkglist.txt
+  pacman -Qmq | grep -vE '^(yay|yay-bin|yay-bin-debug)$' > ~/.config/pkglist-aur.txt
+  ```
+
+- Regenerate the eza theme if yazi updates its icons:
+  `python3 ~/.config/eza/generate-theme.py`
+- Sync bashrc changes to the tracked copy (strip secrets first):
+  `grep -v 'transmission-remote.*-n ' ~/.bashrc > ~/.config/.bashrc_copy`
+
+### System-level files the scripts touch
+
+| Change | Where | By |
+|---|---|---|
+| zram = RAM/2, zstd | `/etc/systemd/zram-generator.conf` | `distro-power-setup` |
+| `vm.swappiness=180` | `/etc/sysctl.d/99-zram-swappiness.conf` | `distro-power-setup` |
+| Power profiles (auto power-saver on battery) | `power-profiles-daemon.service` | `distro-power-setup` |
+| Journal cap 500M | `/etc/systemd/journald.conf.d/50-maxsize.conf` | `distro-clean-root` |
+| Pacman cache `-k2` | `/etc/conf.d/pacman-contrib` | `distro-clean-root` |
