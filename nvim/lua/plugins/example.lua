@@ -136,6 +136,7 @@ return {
   { import = "lazyvim.plugins.extras.lang.typescript" },
 
   -- add more treesitter parsers
+  --[[
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
@@ -171,6 +172,7 @@ return {
       })
     end,
   },
+  --]]
 
   -- the opts function can also be used to change the default opts:
   {
