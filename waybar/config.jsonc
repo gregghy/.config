@@ -2,13 +2,8 @@
 	"layer": "top",
 	"position": "top",
 	"modules-left": ["clock", "network"],
-	"modules-center": ["custom/workspace", "hyprland/window"],
+	"modules-center": ["custom/workspace"],
 	"modules-right": ["cpu", "memory", "temperature", "battery", "pulseaudio"],
-	
-	
-	"hyprland/window": {
-		"max-length": 30
-  },
 
 	"memory": {
     "interval": 30,

@@ -23,12 +23,10 @@ tooltip {
 #custom-workspace {
     color: #83a598;
     border-radius: 10px;
-    margin-right: 8px;
 }
 
 #custom-power_profile,
 #custom-weather,
-#window,
 #clock,
 #battery,
 #pulseaudio,
@@ -75,14 +73,6 @@ tooltip {
     color: #a6e3a1;
     border-left: 0px;
     border-right: 0px;
-}
-
-#window {
-    background: #1d2021;
-    color: #f2c993;
-    border-radius: 10px;
-    margin-left: 60px;
-    margin-right: 60px;
 }
 
 #clock {
