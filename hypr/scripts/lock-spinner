@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# hyprlock cmd[update:150] — braille spinner + "locked"
+f=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
+i=$(( (10#$(date +%s%N) / 150000000) % 10 ))
+printf '%s locked' "${f[i]}"
