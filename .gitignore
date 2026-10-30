@@ -75,6 +75,8 @@ nchat/*
 !nchat/ui.conf
 !nchat/color.conf
 !nchat/app.conf
+!nchat/usercolor.conf
+!nchat/open-media.sh
 nemo/
 autostart/
 obs-studio/
