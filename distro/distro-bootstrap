@@ -51,6 +51,14 @@ fi
 info "Installing $(wc -l < "$C/pkglist-aur.txt") AUR packages"
 yay -S --needed --noconfirm - < "$C/pkglist-aur.txt"
 
+# nchat fork (gregghy/nchat @ custom) — cloned to ~/progetti/nchat,
+# built via its own arch/PKGBUILD which sources that clone.
+info "Building nchat fork"
+mkdir -p "$HOME/progetti"
+[ -d "$HOME/progetti/nchat/.git" ] || \
+  git clone -b custom https://github.com/gregghy/nchat "$HOME/progetti/nchat"
+(cd "$HOME/progetti/nchat/arch" && makepkg -si --noconfirm)
+
 # ── 4. fonts (no packages — fetched from upstream releases) ─────────
 info "Installing nerd fonts"
 mkdir -p "$HOME/.local/share/fonts"
