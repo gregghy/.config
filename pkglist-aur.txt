@@ -18,10 +18,12 @@ kiro-bin
 libresprite-bin
 mictray
 mullvad-vpn-bin
+nchat-git
 powerpill-me
 python312
 spim-svn
 trae-bin
+waypaper
 windsurf
 wlogout
 wluma

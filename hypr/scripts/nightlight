@@ -1,9 +1,25 @@
 #!/usr/bin/env bash
-# Toggle hyprsunset night light (4000K).
-if pgrep -x hyprsunset >/dev/null; then
-	pkill -x hyprsunset
-	notify-send "Night light off" -t 1500
+# Ctrl+Alt+N — night-light toggle with wallpaper sync:
+#   on  -> force 6500K AND lock day-mode until the next solar boundary
+#   off -> resume auto (sun-driven tint + wallpaper)
+# State tracked in a file — hyprsunset runs regardless, so pgrep is useless.
+STATE=/tmp/nightlight-on
+OVERRIDE=/tmp/daynight-override
+
+pgrep -x hyprsunset >/dev/null || setsid hyprsunset >/dev/null 2>&1 &
+
+if [ -f "$STATE" ]; then
+	rm -f "$STATE"
+	info=$(gammastep -p 2>&1 | grep 'Period:')
+	case "$info" in
+		*Night*|*Transition*) echo "forced-day:night" > "$OVERRIDE" ;;
+		*) rm -f "$OVERRIDE" ;;
+	esac
+	hyprctl -q hyprsunset temperature 6500
+	notify-send "Night light off — day until dawn" -t 1500
 else
-	setsid hyprsunset -t 4000 >/dev/null 2>&1 &
-	notify-send "Night light on (4000K)" -t 1500
+	touch "$STATE"
+	rm -f "$OVERRIDE"
+	notify-send "Night light on" -t 1500
 fi
+systemctl --user kill -s USR1 daynight 2>/dev/null

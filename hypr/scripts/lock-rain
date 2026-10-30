@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# hyprlock cmd[update:120] — full-canvas 木 art rain, drifting like leaves.
+# Drops lie sideways (landscape): even-indexed face right, odd face left.
+# Filler is U+00A0 (non-breaking space): normal spaces get trimmed at
+# line edges, which collapsed the canvas to the widest drop before.
+# Each drop gets its own color via pango <span foreground> markup.
+ms=$((10#$(date +%s%N)/1000000))
+awk -v ms="$ms" 'BEGIN {
+    COLS = 150; ROWS = 52; DROPS = 16; W = 24; H = 5
+    nb = sprintf("\302\240")                     # U+00A0, untrimmable
+    pal[0] = "#b8bb26"; pal[1] = "#fabd2f"; pal[2] = "#fe8019"
+    pal[3] = "#fb4934"; pal[4] = "#af3a03"
+    # 木 lying on its side — tumble frames: full face, squashed, edge-on.
+    # The mirrored halves of a tumble cycle are the same lines reversed.
+    FA = "     +oo.    oo         |      .+ooo+.ss.        |   .++++oossssso+++     |      .+oo++.ss.        |     .oo.    oo         "
+    MA = "     +ooooo+.ss.        |   .++++oossssso+++     |     .oooo++.ss.        "
+    TA = "   .++++oossssso+++     "
+
+    for (r = 0; r < ROWS; r++)
+        for (c = 0; c < COLS; c++) { cell[r,c] = nb; colr[r,c] = -1 }
+
+    # shared breeze: the whole field drifts left/right together slowly
+    gust = 9 * sin(6.2832 * ms / 26000)
+
+    for (i = 0; i < DROPS; i++) {
+        speed = 2 + (i * 2) % 4                  # rows/sec 2..5, very gentle
+        span  = ROWS + H + (i * 31) % 15 + 4
+        # even vertical spread: own phase band + jitter, dephases over time
+        p     = ms * speed / 1000 + i * span / DROPS + ((i * 271 + 53) % 89) / 89 * span / DROPS
+        # leaf catching air: surges and stalls along its fall path (±3-6 rows, 4-7s)
+        p    += (2 + i % 3) * sin(6.2832 * ms / (5200 + i * 600) + i * 1.1)
+        cyc   = int(p / span)
+        # slow big sway + quicker small flutter + breeze + quick tremble
+        sway  = int((3 + i % 4) * sin(6.2832 * ms / (7000 + i * 800) + i * 1.7) \
+                  + (1 + i % 3) * sin(6.2832 * ms / (2200 + i * 250) + i * 0.9))
+        bob   = int(1.2 * sin(6.2832 * ms / (1500 + i * 300) + i * 2.3))
+        yy    = int(p % span) - H + bob
+        # stratified spawn: each drop owns a width band, jitters inside it
+        base  = int(i * (COLS - W) / DROPS + ((i * 97 + cyc * 131 + 37) % 97) / 97 * (COLS - W) / DROPS)
+        xx    = base + sway + int(gust)
+        if (xx < 0) xx = 0
+        if (xx > COLS - W) xx = COLS - W
+        # tumble: roll edge-over through the squash frames, mirrored each half
+        seg  = int((ms + i * 997) * 8 / (12000 + i * 1300)) % 8
+        nart = (seg == 0 || seg == 4) ? FA : (seg == 2 || seg == 6) ? TA : MA
+        mir  = (seg >= 3 && seg <= 6)
+        nh   = split(nart, L, "|")
+        voff = int((H - nh) / 2)
+        # in-plane rock: tilt the shape via a per-column row offset
+        tilt = (0.22 + 0.05 * (i % 3)) * sin(6.2832 * ms / (7000 + i * 800) + i * 1.7)
+        for (a = 0; a < nh; a++) {
+            line = L[a + 1]
+            if (mir) { rl = ""; for (z = length(line); z >= 1; z--) rl = rl substr(line, z, 1); line = rl }
+            ry = yy + a + voff
+            for (k = 0; k < W; k++) {
+                ch = substr(line, k + 1, 1)
+                if (ch == " ") continue             # transparent gaps — no box
+                ryy = ry + int(tilt * (k - 12))
+                if (ryy < 0 || ryy >= ROWS) continue
+                cell[ryy, xx + k] = ch
+                colr[ryy, xx + k] = i
+            }
+        }
+    }
+
+    for (r = 0; r < ROWS; r++) {
+        out = ""; cur = -2
+        for (c = 0; c < COLS; c++) {
+            if (colr[r,c] != cur) {
+                if (cur >= 0) out = out "</span>"
+                if (colr[r,c] >= 0) out = out "<span foreground=\"" pal[colr[r,c] % 5] "\">"
+                cur = colr[r,c]
+            }
+            out = out cell[r,c]
+        }
+        if (cur >= 0) out = out "</span>"
+        print out
+    }
+}'

@@ -1,5 +1,6 @@
 7zip
 apache
+awww
 base
 base-devel
 bat
@@ -25,7 +26,9 @@ firefox
 flatpak
 fluidsynth
 fzf
+gammastep
 gcc-fortran
+geoclue
 gimp
 git
 gnuplot
@@ -90,10 +93,12 @@ python-pipx
 python-pycryptodome
 python-requests
 qbittorrent
+quickshell
 reflector
 resvg
 rlwrap
 rmpc
+rofi
 rsync
 sdl2-compat
 sdl2_image

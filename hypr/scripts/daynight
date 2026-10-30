@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Day/night wallpaper sync — follows gammastep's solar period, so it
+# tracks seasons and location automatically. Picks a random wallpaper
+# from the period's pool (never repeating the last pick). Manual picks
+# survive until the next dawn/dusk boundary.
+DIR=/home/gregghy/.config/hypr
+DARK_NAMES="astro_jelly vega tokyo-night board hk_neon"
+STATE=/tmp/daynight-state
+
+mapfile -t files < <(find "$DIR" -maxdepth 1 -type f \
+    \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) | sort)
+dark=(); light=()
+for f in "${files[@]}"; do
+    base=${f##*/}; base=${base%.*}
+    hit=
+    for d in $DARK_NAMES; do [ "$base" = "$d" ] && { hit=1; break; }; done
+    [ -n "$hit" ] && dark+=("$f") || light+=("$f")
+done
+
+pick() { # pick <array-name> <last-path> — random element != last
+    local -n pool=$1
+    local last=$2 c n=${#pool[@]}
+    [ "$n" -eq 0 ] && return 1
+    [ "$n" -eq 1 ] && { printf '%s' "${pool[0]}"; return; }
+    while :; do
+        c=${pool[RANDOM % n]}
+        [ "$c" != "$last" ] && { printf '%s' "$c"; return; }
+    done
+}
+
+OVERRIDE=/tmp/daynight-override
+trap : USR1   # systemctl --user kill -s USR1 daynight wakes the loop instantly
+
+while :; do
+    info=$(gammastep -p 2>&1 | grep 'Period:')
+    case "$info" in
+        *%?day*) pct=${info#*\(}; pct=${pct%%%*}; [ "${pct%.*}" -ge 50 ] && solar=day || solar=night ;;
+        *Daytime*) solar=day ;;
+        *Night*)   solar=night ;;
+        *)         solar="" ;;
+    esac
+    want=$solar
+    # manual override (nightlight kill): force day until the solar period moves on
+    if [ -f "$OVERRIDE" ]; then
+        read -r o < "$OVERRIDE"
+        if [ "${o#forced-day:}" = "$solar" ]; then want=day; else rm -f "$OVERRIDE"; fi
+    fi
+    cur=$(cat "$STATE" 2>/dev/null)
+    [ -n "$want" ] && [ "$want" != "${cur%%:*}" ] && {
+        last=${cur#*:}; [ "$last" = "$cur" ] && last=
+        [ "$want" = day ] && pic=$(pick light "$last") || pic=$(pick dark "$last")
+        [ -n "$pic" ] && awww img --transition-type fade --transition-duration 2 "$pic" \
+            && echo "$want:$pic" > "$STATE"
+    }
+    # keep screen tint synced (hyprsunset daemon; idempotent)
+    case "$want" in
+        day)   hyprctl -q hyprsunset temperature 6500 ;;
+        night) hyprctl -q hyprsunset temperature 4000 ;;
+    esac
+    sleep 15 & wait
+done

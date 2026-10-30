@@ -1,0 +1,13 @@
+[Unit]
+Description=Day/night wallpaper sync (gammastep period watcher)
+PartOf=hyprland-session.target
+After=hyprland-session.target
+StartLimitIntervalSec=0
+
+[Service]
+ExecStart=/home/gregghy/.config/hypr/scripts/daynight
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=hyprland-session.target
