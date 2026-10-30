@@ -59,6 +59,25 @@ mkdir -p "$HOME/progetti"
   git clone -b custom https://github.com/gregghy/nchat "$HOME/progetti/nchat"
 (cd "$HOME/progetti/nchat/arch" && makepkg -si --noconfirm)
 
+# hyprquickpaper (quickshell coverflow picker — gitignored clone)
+QSC="$HOME/.config/quickshell/hyprquickpaper"
+if [ ! -d "$QSC/.git" ]; then
+    info "Cloning hyprquickpaper"
+    mkdir -p "$HOME/.config/quickshell"
+    git clone --depth 1 https://github.com/ujjalsigdel/hyprquickpaper "$QSC" || true
+fi
+if [ -f "$QSC/config.json" ]; then
+    sed -i \
+        -e "s|\"wallpaper_path\": .*|\"wallpaper_path\": \"$HOME/.config/hypr/\",|" \
+        -e 's|"wallpaper_tool": .*|"wallpaper_tool": "awww",|' \
+        -e 's|"active_layout": .*|"active_layout": "layouts/shell-coverflow.qml",|' \
+        -e 's|"border_color": .*|"border_color": "#83a598",|' \
+        "$QSC/config.json"
+    chmod +x "$QSC"/*.sh 2>/dev/null || true
+    git -C "$QSC" apply "$C/distro/hyprquickpaper-coverflow.patch" 2>/dev/null \
+        || echo "  (coverflow restyle patch skipped — stock layout still works)"
+fi
+
 # ── 4. fonts (no packages — fetched from upstream releases) ─────────
 info "Installing nerd fonts"
 mkdir -p "$HOME/.local/share/fonts"
