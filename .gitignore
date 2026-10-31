@@ -55,7 +55,10 @@ chromium/
 discord/
 libresprite/
 pulse/
-devin/
+devin/*
+!devin/skills/
+!devin/config.json
+!devin/herdr-agent-state.sh
 .devin/
 gh/
 .wrangler/

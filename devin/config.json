@@ -1,0 +1,139 @@
+{
+  "agent": {
+    "model": "swe-2-max",
+    "preferred_family_models": {
+      "claude-opus-5-5": "claude-opus-5-5-high",
+      "claude-sonnet-5-5": "claude-sonnet-5-5-high",
+      "deepseek-v4-1-flash": "deepseek-v4-1-flash-high",
+      "fusion": "fusion-gpt-6-1-sol-high-sidekick-swe-2-high",
+      "glm-5-3": "glm-5-3-max",
+      "glm-5-3-flash": "glm-5-3-flash-max",
+      "gpt-6-1-sol": "gpt-6-1-sol-high",
+      "gpt-6-astra": "gpt-6-astra-high",
+      "gpt-6-sol": "gpt-6-sol-high",
+      "swe-2": "swe-2-max"
+    }
+  },
+  "devin": {
+    "org_id": "org-94a3408762ce4307a6056034ab45fa2e"
+  },
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/home/gregghy/.config/devin/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/home/gregghy/.config/devin/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/home/gregghy/.config/devin/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/home/gregghy/.config/devin/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/home/gregghy/.config/devin/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/home/gregghy/.config/devin/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Write(/tmp)",
+      "Fetch(domain:arxiv.org)",
+      "Write(~/uni/semester-3/comp-graph/capg)",
+      "Fetch(domain:developer.download.nvidia.com)",
+      "Fetch(domain:gist.github.com)",
+      "Fetch(domain:www.cecm.sfu.ca)",
+      "Fetch(domain:www.cambridge.org)",
+      "Fetch(domain:terrytao.wordpress.com)",
+      "Fetch(domain:www.sciencedirect.com)",
+      "Fetch(domain:ar5iv.labs.arxiv.org)",
+      "Fetch(domain:livrepository.liverpool.ac.uk)",
+      "Fetch(domain:raw.githubusercontent.com)",
+      "Fetch(domain:triton-lang.org)",
+      "Fetch(domain:github.com)",
+      "Fetch(domain:*)",
+      "Exec(true)",
+      "Exec(ls)",
+      "Exec(cat)",
+      "Exec(python)",
+      "Exec(npm run)",
+      "Exec(./node_modules/.bin/tsc)",
+      "Exec(command)",
+      "Exec(ssh)",
+      "Exec(printf)",
+      "Exec(sed)",
+      "Exec(nvidia-smi)",
+      "Exec(grep)",
+      "Exec(head)",
+      "Exec(herdr agent)",
+      "Exec(herdr)",
+      "Exec(find)",
+      "Exec(strings)",
+      "Exec(pacman)",
+      "Exec(wc)",
+      "Exec(git remote)",
+      "Exec(tail)",
+      "Exec(env)",
+      "Exec(rustc)",
+      "Exec(curl)",
+      "Exec(man)",
+      "Exec(zcat)",
+      "Exec(ocamlfind list)"
+    ]
+  },
+  "shell": {
+    "setup_complete": true
+  },
+  "theme_mode": "dark",
+  "version": 1
+}
