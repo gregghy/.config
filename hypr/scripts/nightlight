@@ -1,25 +1,40 @@
 #!/usr/bin/env bash
-# Ctrl+Alt+N — night-light toggle with wallpaper sync:
-#   on  -> force 6500K AND lock day-mode until the next solar boundary
-#   off -> resume auto (sun-driven tint + wallpaper)
-# State tracked in a file — hyprsunset runs regardless, so pgrep is useless.
-STATE=/tmp/nightlight-on
+# Ctrl+Alt+N — manual day/night override, one press = one flip:
+#   during day   -> force night (4000K + dark wall) until dusk or next press
+#   during night -> force day (6500K + light wall) until dawn or next press
+#   press again  -> back to solar-driven auto
+# The override file itself is the toggle state; daynight.service reads
+# it, applies wallpaper+tint, and drops it at the matching boundary.
 OVERRIDE=/tmp/daynight-override
 
 pgrep -x hyprsunset >/dev/null || setsid hyprsunset >/dev/null 2>&1 &
 
-if [ -f "$STATE" ]; then
-	rm -f "$STATE"
+# gammastep "Period" -> day|night (Transition maps by its %)
+solar_of() {
+	local info pct
 	info=$(gammastep -p 2>&1 | grep 'Period:')
 	case "$info" in
-		*Night*|*Transition*) echo "forced-day:night" > "$OVERRIDE" ;;
-		*) rm -f "$OVERRIDE" ;;
+		*%?day*) pct=${info#*\(}; pct=${pct%%%*}; [ "${pct%.*}" -ge 50 ] && echo day || echo night ;;
+		*Daytime*) echo day ;;
+		*Night*)   echo night ;;
 	esac
-	hyprctl -q hyprsunset temperature 6500
-	notify-send "Night light off — day until dawn" -t 1500
-else
-	touch "$STATE"
+}
+
+solar=$(solar_of)
+# gammastep blank -> fall back to the live temperature
+[ -z "$solar" ] && { t=$(hyprctl hyprsunset temperature 2>/dev/null); solar=$([ "${t:-6500}" -ge 5000 ] && echo day || echo night); }
+
+if [ -f "$OVERRIDE" ]; then
 	rm -f "$OVERRIDE"
-	notify-send "Night light on" -t 1500
+	hyprctl -q hyprsunset temperature "$([ "$solar" = day ] && echo 6500 || echo 4000)"
+	notify-send "Night light auto — following the sun" -t 1500
+elif [ "$solar" = day ]; then
+	echo "forced-night:day" > "$OVERRIDE"
+	hyprctl -q hyprsunset temperature 4000
+	notify-send "Night forced — until dusk" -t 1500
+else
+	echo "forced-day:night" > "$OVERRIDE"
+	hyprctl -q hyprsunset temperature 6500
+	notify-send "Day forced — until dawn" -t 1500
 fi
 systemctl --user kill -s USR1 daynight 2>/dev/null

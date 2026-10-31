@@ -14,12 +14,14 @@ if pgrep -x wl-screenrec >/dev/null || pgrep -x wf-recorder >/dev/null; then
 fi
 
 file="$VIDEOS/screenrecording-$(date +%F_%H-%M-%S).mp4"
+# monitor of the default sink = internal/desktop audio, not the mic
+AUDIO_DEV="$(pactl get-default-sink).monitor"
 rec() {
 	if command -v wl-screenrec >/dev/null; then
-		wl-screenrec -f "$file" --audio --framerate 60 \
+		wl-screenrec -f "$file" --audio --audio-device "$AUDIO_DEV" --framerate 60 \
 			--ffmpeg-encoder-options="-c:v libx264 -crf 23 -preset medium -level 5.1 -movflags +faststart" "$@"
 	else
-		wf-recorder -f "$file" -a -r 60 \
+		wf-recorder -f "$file" --audio="$AUDIO_DEV" -r 60 \
 			-c libx264 -p crf=23 -p preset=medium -p level=5.1 -p movflags=+faststart "$@"
 	fi
 }

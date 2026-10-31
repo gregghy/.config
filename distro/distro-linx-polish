@@ -29,6 +29,10 @@ EOF
 if command -v plymouth-set-default-theme >/dev/null; then
 	echo "==> Plymouth 林 theme"
 	install -Dm644 "$repo/fastfetch/lin-splash.png" /usr/share/plymouth/themes/linx/lin-splash.png
+	# 8x8 #1d2021 tile the script stretches as the backdrop
+	base64 -d > /usr/share/plymouth/themes/linx/bg.png <<'B64'
+iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAADUExURR0gIWppOQUAAAAHdElNRQfqCh8LKSKksvzCAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI2LTEwLTMxVDExOjQxOjM0KzAwOjAwg7rOngAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNi0xMC0zMVQxMTo0MTozNCswMDowMPLndiIAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjYtMTAtMzFUMTE6NDE6MzQrMDA6MDCl8lf9AAAAC0lEQVQI12NgQAUAABAAAaHFIcEAAAAASUVORK5CYII=
+B64
 	cat > /usr/share/plymouth/themes/linx/linx.plymouth <<'EOF'
 [Plymouth Theme]
 Name=linx
@@ -44,9 +48,15 @@ EOF
 Window.SetBackgroundTopColor(0.114, 0.125, 0.129);
 Window.SetBackgroundBottomColor(0.098, 0.098, 0.098);
 
+# explicit dark backdrop sprite — SetBackground*Color is ignored on
+# some framebuffers (BGRT/firmware bg leaks through)
+bg.image = Image("bg.png").Scale(Window.GetWidth(), Window.GetHeight());
+bg.sprite = Sprite(bg.image);
+bg.sprite.SetZ(-100);
+
 art.image = Image("lin-splash.png");
-# fit to ~52% of screen height, never wider than 80% of screen
-scale = Window.GetHeight() * 0.52 / art.image.GetHeight();
+# fit to ~72% of screen height, never wider than 80% of screen
+scale = Window.GetHeight() * 0.72 / art.image.GetHeight();
 if (art.image.GetWidth() * scale > Window.GetWidth() * 0.8)
   scale = Window.GetWidth() * 0.8 / art.image.GetWidth();
 art.scaled = art.image.Scale(art.image.GetWidth() * scale,
@@ -67,13 +77,40 @@ EOF
 		sed -i 's/^HOOKS=(\(.*\)systemd /HOOKS=(\1systemd plymouth /' /etc/mkinitcpio.conf
 	plymouth-set-default-theme linx
 	mkinitcpio -P
+
+	echo "==> Plymouth: hold splash ~1s after boot completes"
+	install -d /etc/systemd/system/plymouth-quit.service.d
+	cat > /etc/systemd/system/plymouth-quit.service.d/hold.conf <<'EOF'
+[Service]
+ExecStartPre=/bin/sleep 1
+EOF
 fi
 
 if command -v grub-mkconfig >/dev/null && [ -d /boot/grub ]; then
-	echo "==> GRUB: splash flag + 林UX menu names"
+	echo "==> GRUB: splash flag + 林UX menu names + theme"
 	grep -qw splash /etc/default/grub || \
 		sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 splash"/' /etc/default/grub
 	sed -i 's/^GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="林UX"/' /etc/default/grub
+
+	# wipe stale assets first (ESP is FAT32: no -a preserve)
+	rm -rf /boot/grub/themes/linx
+	install -d /boot/grub/themes/linx
+	cp -r "$repo/distro/grub-theme/." /boot/grub/themes/linx/
+	# pf2 font must come from a CJK font (menu entries say 林UX);
+	# fall back to unifont if noto-cjk is missing
+	if grub-mkfont -o /boot/grub/themes/linx/noto-26.pf2 -n "NotoSansCJK" -s 26 \
+		/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc 2>/dev/null; then
+		:
+	else
+		install -m644 /usr/share/grub/unicode.pf2 \
+			/boot/grub/themes/linx/noto-26.pf2
+		sed -i 's/NotoSansCJK/Unifont/g' /boot/grub/themes/linx/theme.txt
+	fi
+	# fixed gfx mode so the bg art isn't rescaled by the firmware
+	sed -i 's/^GRUB_GFXMODE=.*/GRUB_GFXMODE="2256x1504,1920x1080,auto"/' /etc/default/grub
+	grep -q '^GRUB_THEME=' /etc/default/grub \
+		&& sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/linx/theme.txt"|' /etc/default/grub \
+		|| sed -i 's|^#GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/linx/theme.txt"|' /etc/default/grub
 	grub-mkconfig -o /boot/grub/grub.cfg
 fi
 

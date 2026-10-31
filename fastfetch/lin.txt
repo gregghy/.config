@@ -1,8 +1,8 @@
 [38;2;156;207;216m        `..             `..
         /ss             oss
         /ss             +so
-  +++++/oss//+++ `++++++sss++++++:
-  ```` /sss+-```  `````ossss.`.```
+  -ssss/oss//ss+-  -sss/oss//sso+-
+       /sss+-          ossss.
       :ssss+so-       +ssssso
     `os-/ss  /ss-   -ss.+so.ss-
    /ss. /ss    `  .os+  +so  os+`

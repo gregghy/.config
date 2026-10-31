@@ -1,5 +1,5 @@
 diff --git a/layouts/shell-coverflow.qml b/layouts/shell-coverflow.qml
-index 05f501d..4be18ee 100644
+index 05f501d..66866a2 100644
 --- a/layouts/shell-coverflow.qml
 +++ b/layouts/shell-coverflow.qml
 @@ -26,8 +26,8 @@ PanelWindow {
@@ -53,61 +53,109 @@ index 05f501d..4be18ee 100644
                          font.pixelSize: 9
                          font.weight: Font.Bold
                          font.letterSpacing: 1
-@@ -559,10 +559,10 @@ PanelWindow {
-         Text {
-             anchors.horizontalCenter: parent.horizontalCenter
-             text: Qt.formatDateTime(currentDateTime, "dddd").toUpperCase()
+@@ -545,90 +545,21 @@ PanelWindow {
+         }
+     }
+ 
+-    // -----------------------------------------------------
+-    // DATE / TIME + SEARCH HEADER
+-    // -----------------------------------------------------
+-    Column {
+-        id: headerColumn
+-        anchors.horizontalCenter: parent.horizontalCenter
+-        anchors.top: parent.top
+-        anchors.topMargin: 60
+-        spacing: 6
+-        z: 200
+-
+-        Text {
+-            anchors.horizontalCenter: parent.horizontalCenter
+-            text: Qt.formatDateTime(currentDateTime, "dddd").toUpperCase()
 -            color: "#f2f2f2"
-+            color: "#ebdbb2"
-             font.pixelSize: 60
-             font.letterSpacing: 12
+-            font.pixelSize: 60
+-            font.letterSpacing: 12
 -            font.family: customDisplayFont.name
-+            font.family: "CommitMono Nerd Font"
-             font.capitalization: Font.AllUppercase
-             style: Text.Raised
-             styleColor: "#40000000"
-@@ -571,19 +571,19 @@ PanelWindow {
-         Text {
-             anchors.horizontalCenter: parent.horizontalCenter
-             text: Qt.formatDateTime(currentDateTime, "dd MMM yyyy").toUpperCase()
+-            font.capitalization: Font.AllUppercase
+-            style: Text.Raised
+-            styleColor: "#40000000"
+-        }
+-
+-        Text {
+-            anchors.horizontalCenter: parent.horizontalCenter
+-            text: Qt.formatDateTime(currentDateTime, "dd MMM yyyy").toUpperCase()
 -            color: "#cfcfcf"
-+            color: "#928374"
-             font.pixelSize: 16
-             font.letterSpacing: 4
+-            font.pixelSize: 16
+-            font.letterSpacing: 4
 -            font.family: "sans-serif"
-+            font.family: "CommitMono Nerd Font"
-         }
- 
-         Text {
-             anchors.horizontalCenter: parent.horizontalCenter
-             text: "- " + Qt.formatDateTime(currentDateTime, "hh:mm AP") + " -"
+-        }
+-
+-        Text {
+-            anchors.horizontalCenter: parent.horizontalCenter
+-            text: "- " + Qt.formatDateTime(currentDateTime, "hh:mm AP") + " -"
 -            color: "#cfcfcf"
-+            color: "#928374"
-             font.pixelSize: 14
-             font.letterSpacing: 3
+-            font.pixelSize: 14
+-            font.letterSpacing: 3
 -            font.family: "sans-serif"
-+            font.family: "CommitMono Nerd Font"
-         }
- 
-         Item { width: 1; height: 14 }
-@@ -594,9 +594,9 @@ PanelWindow {
-             width: 360
-             height: 40
-             radius: 20
+-        }
+-
+-        Item { width: 1; height: 14 }
+-
+-        Rectangle {
+-            id: searchBox
+-            anchors.horizontalCenter: parent.horizontalCenter
+-            width: 360
+-            height: 40
+-            radius: 20
 -            color: "#33000000"
-+            color: "#331d2021"
-             border.width: 1
+-            border.width: 1
 -            border.color: "#33ffffff"
-+            border.color: "#33bdae93"
- 
-             TextInput {
-                 id: searchInput
-@@ -604,7 +604,7 @@ PanelWindow {
-                 anchors.leftMargin: 18
-                 anchors.rightMargin: 18
-                 verticalAlignment: TextInput.AlignVCenter
+-
+-            TextInput {
+-                id: searchInput
+-                anchors.fill: parent
+-                anchors.leftMargin: 18
+-                anchors.rightMargin: 18
+-                verticalAlignment: TextInput.AlignVCenter
 -                color: "#f2f2f2"
-+                color: "#ebdbb2"
-                 font.pixelSize: 14
-                 clip: true
-                 selectByMouse: true
+-                font.pixelSize: 14
+-                clip: true
+-                selectByMouse: true
+-
+-                onTextChanged: searchQuery = text
+-
+-                Keys.onEscapePressed: {
+-                    searchInput.text = "";
+-                    pathView.forceActiveFocus();
+-                }
+-                Keys.onReturnPressed: pathView.forceActiveFocus()
+-                Keys.onEnterPressed: pathView.forceActiveFocus()
+-                Keys.onDownPressed: pathView.forceActiveFocus()
+-                Keys.onTabPressed: pathView.forceActiveFocus()
+-
+-                Text {
+-                    anchors.fill: parent
+-                    verticalAlignment: Text.AlignVCenter
+-                    text: "Search wallpapers..."
+-                    color: "#88ffffff"
+-                    font.pixelSize: 14
+-                    visible: searchInput.text.length === 0
+-                }
+-            }
++    // keep TextInput offscreen so keyboard search still works
++    TextInput {
++        id: searchInput
++        width: 0
++        height: 0
++        opacity: 0
++        color: "#ebdbb2"
++        onTextChanged: searchQuery = text
++        Keys.onEscapePressed: {
++            searchInput.text = "";
++            pathView.forceActiveFocus();
+         }
++        Keys.onReturnPressed: pathView.forceActiveFocus()
++        Keys.onEnterPressed: pathView.forceActiveFocus()
++        Keys.onDownPressed: pathView.forceActiveFocus()
++        Keys.onTabPressed: pathView.forceActiveFocus()
+     }
+ }

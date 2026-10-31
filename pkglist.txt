@@ -8,6 +8,7 @@ bluetui
 bluez
 bluez-utils
 brightnessctl
+btop
 chafa
 chromium
 clang

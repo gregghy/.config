@@ -40,10 +40,11 @@ while :; do
         *)         solar="" ;;
     esac
     want=$solar
-    # manual override (nightlight kill): force day until the solar period moves on
-    if [ -f "$OVERRIDE" ]; then
+    # manual override (nightlight toggle): "forced-X:Y" holds mode X
+    # while the solar period is still Y; dissolves at the boundary
+    if [ -f "$OVERRIDE" ] && [ -n "$solar" ]; then
         read -r o < "$OVERRIDE"
-        if [ "${o#forced-day:}" = "$solar" ]; then want=day; else rm -f "$OVERRIDE"; fi
+        if [ "${o#*:}" = "$solar" ]; then want=${o%%:*}; want=${want#forced-}; else rm -f "$OVERRIDE"; fi
     fi
     cur=$(cat "$STATE" 2>/dev/null)
     [ -n "$want" ] && [ "$want" != "${cur%%:*}" ] && {

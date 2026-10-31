@@ -18,7 +18,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user start hyprland-session.target")
 	hl.exec_cmd("waybar")
 	hl.exec_cmd("awww-daemon")
-	hl.exec_cmd("sleep 0.5 && awww img --transition-type fade /home/gregghy/.config/hypr/autumn_forest.jpg")
+	hl.exec_cmd("sleep 0.5 && awww img --transition-type fade /home/gregghy/.config/hypr/chinese_panel.jpg")
 	hl.exec_cmd("hyprsunset")
 	hl.exec_cmd("systemctl --user start daynight")
 	hl.exec_cmd("swayosd-server")
@@ -136,6 +136,7 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("qs -p ~/.config/quickshell/hyprquickpaper"))
 hl.bind(mainMod .. " + H", hl.dsp.exec_cmd("kitty --class herdr -e herdr"))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("kitty --class nchat --config /home/gregghy/.config/kitty/kitty.conf --config /home/gregghy/.config/kitty/nchat.conf -e nchat"))
+hl.bind("ALT + O", hl.dsp.exec_cmd("obsidian"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -217,9 +218,24 @@ route("obsidian", 6)
 -- Float system TUIs launched from waybar (impala, wiremix).
 hl.window_rule({
 	name = "float-system-tuis",
-	match = { class = "^(impala|wiremix|bluetui|rmpc)$" },
+	match = { class = "^(impala|wiremix|bluetui|rmpc|btop)$" },
 	float = true,
 	center = true,
+})
+
+-- Sizes as separate rules so they evaluate on already-floated
+-- windows: btop needs real room for its graphs, rmpc a bit more
+-- than kitty's default float size. Literal logical px — the
+-- monitor_w/% expressions don't parse on this build (2256x1504).
+hl.window_rule({
+	name = "size-btop",
+	match = { class = "^btop$" },
+	size = "920 650",
+})
+hl.window_rule({
+	name = "size-rmpc",
+	match = { class = "^rmpc$" },
+	size = "900 640",
 })
 
 -- baomao's console: a floating pill centered over the desktop

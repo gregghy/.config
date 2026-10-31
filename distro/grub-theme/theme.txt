@@ -1,0 +1,52 @@
+# 林UX grub theme — adapted from Jacksaur/CRT-Amber-GRUB-Theme (MIT, see LICENSE).
+# CRT tube photo + phosphor-amber text; the ASCII 林 art is rendered in amber
+# as the logo, like the ENERGY STAR badge on old BIOS screens.
+
+title-text: ""
+desktop-image: "background.png"
+desktop-color: "#000000"
+terminal-font: "Fixedsys Regular 32"
+terminal-box: "terminal_box_*.png"
+terminal-left: "0"
+terminal-top: "0"
+terminal-width: "100%"
+terminal-height: "100%"
+terminal-border: "0"
+
+# item font must carry 林 (entries say 林UX) -> NotoSansCJK, generated
+# by distro-linx-polish via grub-mkfont
++ boot_menu {
+  left = 15%
+  top = 32%
+  width = 70%
+  height = 55%
+  item_font = "NotoSansCJK 26"
+  item_color = "#F28000"
+  selected_item_color = "#ffffff"
+  item_height = 46
+  item_spacing = 8
+  item_icon_space = 12
+  item_pixmap_style = "item_*.png"
+  selected_item_pixmap_style = "selected_item_*.png"
+}
+
++ label {
+  left = 0
+  top = 88%-70
+  width = 100%
+  align = "center"
+  id = "__timeout__"
+  text = "STANDBY FOR AUTOMATIC BOOT IN %d SECONDS"
+  color = "#B36400"
+  font = "Fixedsys Regular 32"
+}
+
++ label {
+  left = 0
+  top = 88%-30
+  width = 100%
+  align = "center"
+  text = "↑/↓ - NAVIGATE     C - COMMAND     ↲ - CONFIRM"
+  color = "#B36400"
+  font = "Fixedsys Regular 32"
+}
